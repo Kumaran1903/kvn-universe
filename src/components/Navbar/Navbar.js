@@ -10,7 +10,6 @@ export default function Navbar() {
     { name: "Store", url: "/store" },
     { name: "About", url: "/about" },
     { name: "Contact", url: "/contact" },
-    { name: "Login", url: "/login" },
   ];
   const [isOpen, setIsOpen] = useState(false);
 
