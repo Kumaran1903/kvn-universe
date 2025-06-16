@@ -23,7 +23,7 @@ export default function Contact() {
             </h3>
             <p>
               Feel free to reach out to us with any questions or inquiries.
-              We're here to help!
+              We&apos;re here to help!
             </p>
 
             <div className="flex items-start space-x-4">
