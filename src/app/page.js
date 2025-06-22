@@ -9,7 +9,7 @@ export default function Home() {
           {/* Left Section */}
           <div className="w-3.2/7 h-full flex flex-col justify-center space-y-3 ">
             <span className="font-bold text-lg lg:text-xl">
-              Hook Users from The Start
+              Welcome to Kevin Universe
             </span>
             <span className="font-bold text-4xl lg:text-5xl">Get Yourself</span>
             <span
@@ -70,7 +70,7 @@ export default function Home() {
       {/* Popular Opening Intro Section  */}
       <div className="w-full bg-indigo-100" style={{ padding: "75px 0px" }}>
         <div className="container mx-auto w-6/7 h-auto">
-          <h3 className="text-center text-2xl md:text-4xl font-bold mb-20">
+          <h3 className="text-center  text-2xl md:text-4xl font-bold mb-20">
             Popular Opening Intros
           </h3>
 

@@ -14,3 +14,9 @@ export const connectToDB = async () => {
     console.log("Error Connecting to DB", err);
   }
 };
+
+export function getGuestSessionId() {
+  if (typeof window === "undefined") return null;
+  const match = document.cookie.match(/guestSessionId=([^;]+)/);
+  return match ? match[1] : null;
+}

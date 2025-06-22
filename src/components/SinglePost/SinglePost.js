@@ -1,20 +1,29 @@
-"use client";
+import { IndianRupee } from "lucide-react";
 import Image from "next/image";
-import { useState } from "react";
-export default function SinglePost() {
-  const [liked, setLiked] = useState(false);
+import CartButton from "./GuestCartButton";
+import UserFavorite from "./UserFavorite";
+import GuestFavorite from "./GuestFavorite";
+import UserCartButton from "./UserCartButton";
+import GuestCartButton from "./GuestCartButton";
+export default function SinglePost({ post }) {
+  const session = { user: { userId: "234" } }; // Placeholder for session data, replace with actual session logic
   return (
-    <div className="shadow-indigo-100 shadow-xl w-80 sm:w-64 md:w-80 lg:w-72 xl:w-90  hover:shadow-2xl hover:shadow-indigo-200 my-5 mx-5 transition-shadow duration-300 rounded-b-xl group">
+    <div className="shadow-indigo-100 shadow-xl w-80 sm:w-64 md:w-80 lg:w-72 xl:w-90  hover:shadow-2xl hover:shadow-indigo-200 my-7 mx-7 transition-shadow duration-300 rounded-b-xl group">
       <div
         className="w-full container mx-auto h-64 lg:h-72 flex flex-col items-center overflow-hidden "
         style={{ paddingBottom: "20px" }}
       >
-        <div className="relative w-full h-full group cursor-pointer">
+        <div className="relative w-full h-full group  ">
+          {session?.user ? (
+            <UserFavorite post={post} userId={session.user.userId} />
+          ) : (
+            <GuestFavorite post={post} />
+          )}
           <Image
             src="/img1.png"
             fill
             alt=""
-            className="transition-transform duration-500 ease-in-out group-hover:scale-105 "
+            className="transition-transform duration-500 ease-in-out group-hover:scale-110 "
           />
         </div>
         <div
@@ -22,33 +31,22 @@ export default function SinglePost() {
           style={{ padding: " 10px 10px" }}
         >
           <div className="flex flex-col space-y-1 ">
-            <span className="text-[1rem]">Universal 100th Anniversary</span>
-            <span
-              className="text-gray-600 font-bold "
+            <span className="text-[1rem]">{post?.title}</span>
+            <div
+              className="flex items-center "
               style={{ padding: " 0px 10px" }}
             >
-              $12.99
-            </span>
+              <IndianRupee className="w-4 h-4 text-gray-600 font-bold" />
+              <span className="text-gray-600 font-bold ">{post?.cost}</span>
+            </div>
           </div>
-          <div
-            onClick={() => setLiked(!liked)}
-            className="cursor-pointer transition-transform duration-300 hover:scale-110"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill={liked ? "#818cf8" : "#4b5563"} // indigo-400 : gray-600
-              viewBox="0 0 24 24"
-              className="w-6 h-6"
-            >
-              <path
-                d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 
-             4.42 3 7.5 3c1.74 0 3.41 0.81 4.5 2.09C13.09 
-             3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 
-             8.5c0 3.78-3.4 6.86-8.55 
-             11.54L12 21.35z"
-              />
-            </svg>
-          </div>
+          <span>
+            {session?.user ? (
+              <UserCartButton post={post} userId={session.user.userId} />
+            ) : (
+              <GuestCartButton post={post} />
+            )}
+          </span>
         </div>
       </div>
     </div>

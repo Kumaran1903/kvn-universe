@@ -8,7 +8,7 @@ export default function Footer() {
       style={{ padding: "20px 0px" }}
     >
       <div
-        className="container mx-auto flex flex-col space-y-5 md:flex-row justify-around w-4/5 "
+        className="container mx-auto flex flex-col space-y-5 sm:flex-row justify-around w-4/5 "
         style={{ padding: "30px 0px" }}
       >
         <div className="flex flex-col space-y-4">
@@ -16,7 +16,7 @@ export default function Footer() {
           <div>Address</div>
           <div>prashanthkevin@gmail.com</div>
           <div>+91987654321</div>
-          <div className="md:flex space-x-3 hidden">
+          <div className="sm:flex space-x-3 hidden">
             <Link
               href="https://www.youtube.com" // <-- Replace with your actual channel
               target="_blank"
@@ -62,53 +62,19 @@ export default function Footer() {
             Copyright &copy; 2025
           </span>
         </div>
-        <div className="hidden lg:flex flex-col space-y-4">
+        <div className="hidden sm:flex flex-col space-y-4">
           <h3 className="text-lg text-gray-800 font-bold">Quick Links</h3>
-          <Link href="/">Store</Link>
-          <Link href="/">Wishlist</Link>
+          <Link href="/store">Store</Link>
+          <Link href="/store">Wishlist</Link>
           <Link href="/">Account</Link>
         </div>
-        <div className="hidden lg:flex flex-col space-y-4">
+        <div className="hidden sm:flex flex-col space-y-4">
           <h3 className="text-lg text-gray-800 font-bold">Important Links</h3>
-          <Link href="/">AboutUs</Link>
-          <Link href="/">ContactUs</Link>
+          <Link href="/about">AboutUs</Link>
+          <Link href="/contact">ContactUs</Link>
           <Link href="/">Privacy Policy</Link>
-        </div>
-        <div className="flex flex-col space-y-3">
-          <h3 className="text-lg text-gray-800 font-bold">SUBSCRIBE</h3>
-          <p>Be the first to get the latest offers</p>
-          <form>
-            <input
-              type="text"
-              placeholder="Email address"
-              className=" bg-white h-12 rounded-l-md text-gray-600"
-              style={{ padding: "5px 8px" }}
-            />
-            <button
-              type="submit"
-              className="bg-indigo-400 h-12 w-15 text-white rounded-r-md"
-              style={{ padding: "10px" }}
-            >
-              JOIN
-            </button>
-          </form>
-          <div className="relative h-15 w-44">
-            <Image
-              src="/payments.png"
-              fill
-              alt="/payments"
-              className="object-contain"
-            />
-          </div>
-          <div className="md:hidden flex justify-between mt-3">
-            <span className="text-sm md:text-md font-semibold">
-              Copyright &copy; 2025
-            </span>
-            <span className="text-sm md:text-md font-semibold">
-              All rights Reserved.
-            </span>
-          </div>
-          <span className="hidden md:block mt-3 text-right text-sm md:text-md font-semibold">
+
+          <span className="hidden sm:block mt-14  lg:mt-13 text-right text-sm md:text-md font-semibold">
             All rights Reserved.
           </span>
         </div>
