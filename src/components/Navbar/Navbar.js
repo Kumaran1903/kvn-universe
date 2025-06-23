@@ -46,7 +46,7 @@ export default async function Navbar() {
         </div>
         <div className="flex items-center space-x-5">
           <ShoppingCart session={session} />
-          <Menu />
+          <Menu session={session} />
         </div>
       </div>
     </div>
