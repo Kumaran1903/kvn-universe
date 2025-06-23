@@ -34,23 +34,21 @@ export const addToCart = async (formData) => {
     } else {
       await Cart.create({ userId: userId, productIds: [productId] });
     }
+    revalidatePath("/");
   } catch (err) {
     console.log("Error Adding to Cart", err);
   }
 };
 
-export const getWishListItems = async (formData) => {
-  const { userId } = Object.fromEntries(formData);
+export const getWishListItems = async (userId) => {
   try {
     await connectToDB();
-    const posts = await Wishlist.find();
-    const refinedItems = posts.map((post) => ({
-      id: post._id.toString(),
-      title: post.title,
-      cost: post.cost,
-      image: post.image,
-    }));
-    return refinedItems;
+    const wishlist = await Wishlist.findOne({ userId: userId });
+    const productIds = wishlist ? wishlist.productIds : [];
+    if (productIds.length === 0) return [];
+    const posts = await getPosts();
+    const filteredPosts = posts.filter((post) => productIds.includes(post.id));
+    return filteredPosts;
   } catch (err) {
     console.log("Error fetching Wislists items", err);
   }
@@ -89,15 +87,18 @@ export const addOrDeleteWishlist = async (formData) => {
 };
 
 export const removeFromWishlist = async (formData) => {
-  const { title } = Object.fromEntries(formData);
+  const { userId, productId } = Object.fromEntries(formData);
   try {
-    await Post.findOneAndUpdate(
-      { title: title },
+    await connectToDB();
+    const wishlist = await Wishlist.findOne({ userId: userId });
+    const index = wishlist.productIds.indexOf(productId);
+    wishlist.productIds.splice(index, 1);
+    await wishlist.save();
+    await Post.findByIdAndUpdate(
+      { _id: productId },
       { $set: { favorite: false } }
     );
-    await Wishlist.findOneAndDelete({ title: title });
     revalidatePath("/");
-    revalidatePath("/store");
     revalidatePath("/cart");
   } catch (err) {
     console.log("Error Removing Wishlist item", err);
@@ -105,62 +106,59 @@ export const removeFromWishlist = async (formData) => {
 };
 
 export const removeFromWishListAddToCart = async (formData) => {
-  const { id } = Object.fromEntries(formData);
+  const { userId, productId } = Object.fromEntries(formData);
   try {
     await connectToDB();
-    const post = await Wishlist.findById(id);
-
-    // delete from wishlist
-    await Wishlist.findByIdAndDelete(id);
-
-    // /unfavorite in post
-    await Post.findOneAndUpdate(
-      { title: post.title },
-      { $set: { favorite: false } }
-    );
-    // add that product to the cart if not exists
-    const temp = await Cart.findOne({ title: post.title });
-    if (temp) {
-      revalidatePath("/");
-      revalidatePath("/store");
-      revalidatePath("/cart");
-      return;
+    //remove from wishlist
+    const wishlist = await Wishlist.findOne({ userId: userId });
+    const index = wishlist.productIds.indexOf(productId);
+    wishlist.productIds.splice(index, 1);
+    await wishlist.save();
+    //add to cart
+    const cart = await Cart.findOne({ userId: userId });
+    if (cart) {
+      if (!cart.productIds.includes(productId)) {
+        cart.productIds.push(productId);
+        // update post favorite status
+        await Post.findByIdAndUpdate(
+          { _id: productId },
+          { $set: { favorite: false } }
+        );
+      }
+      await cart.save();
+    } else {
+      await Cart.create({ userId: userId, productIds: [productId] });
     }
-    await Cart.create({
-      title: post.title,
-      cost: post.cost,
-      image: post.image,
-    });
     revalidatePath("/");
-    revalidatePath("/store");
     revalidatePath("/cart");
   } catch (err) {
     console.log("Error Adding Cart item", err);
   }
 };
 
-export const getCartItems = async () => {
+export const getCartItems = async (userId) => {
   try {
     await connectToDB();
-    const posts = await Cart.find();
-    const refinedItems = posts.map((post) => ({
-      id: post._id.toString(),
-      title: post.title,
-      cost: post.cost,
-      image: post.image,
-    }));
-    return refinedItems;
+    const cart = await Cart.findOne({ userId: userId });
+    const productIds = cart ? cart.productIds : [];
+    if (productIds.length === 0) return [];
+    const posts = await getPosts();
+    const filteredPosts = posts.filter((post) => productIds.includes(post.id));
+    return filteredPosts;
   } catch (err) {
     console.log("Error fetching Cart items", err);
   }
 };
 
 export const removeFromCart = async (formData) => {
-  const { title } = Object.fromEntries(formData);
+  const { userId, productId } = Object.fromEntries(formData);
   try {
-    await Cart.findOneAndDelete({ title: title });
+    await connectToDB();
+    const cart = await Cart.findOne({ userId: userId });
+    const index = cart.productIds.indexOf(productId);
+    cart.productIds.splice(index, 1);
+    await cart.save();
     revalidatePath("/");
-    revalidatePath("/store");
     revalidatePath("/cart");
   } catch (err) {
     console.log("Error Removing Cart item", err);
@@ -168,29 +166,30 @@ export const removeFromCart = async (formData) => {
 };
 
 export const addWishlistDeleteCart = async (formData) => {
-  const { title } = Object.fromEntries(formData);
+  const { userId, productId } = Object.fromEntries(formData);
   try {
-    const temp = await Wishlist.findOne({ title: title });
-    if (temp) {
-      await Cart.findOneAndDelete(title);
-      revalidatePath("/");
-      revalidatePath("/store");
-      revalidatePath("/cart");
-      return;
+    await connectToDB();
+    //remove from cart
+    const cart = await Cart.findOne({ userId: userId });
+    const index = cart.productIds.indexOf(productId);
+    cart.productIds.splice(index, 1);
+    await cart.save();
+    //add to wishlist
+    const wishlist = await Wishlist.findOne({ userId: userId });
+    if (wishlist) {
+      if (!wishlist.productIds.includes(productId)) {
+        wishlist.productIds.push(productId);
+        // update post favorite status
+        await Post.findByIdAndUpdate(
+          { _id: productId },
+          { $set: { favorite: true } }
+        );
+      }
+      await wishlist.save();
+    } else {
+      await Wishlist.create({ userId: userId, productIds: [productId] });
     }
-    const post = await Post.findOne({ title: title });
-    await Wishlist.create({
-      title: post.title,
-      cost: post.cost,
-      image: post.image,
-    });
-    await Post.findOneAndUpdate(
-      { title: post.title },
-      { $set: { favorite: true } }
-    );
-    await Cart.findOneAndDelete({ title: title });
     revalidatePath("/");
-    revalidatePath("/store");
     revalidatePath("/cart");
   } catch (err) {
     console.log("Error Moving item to WishList", err);

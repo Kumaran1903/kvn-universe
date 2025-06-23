@@ -1,12 +1,12 @@
 import { IndianRupee } from "lucide-react";
 import Image from "next/image";
-import CartButton from "./GuestCartButton";
 import UserFavorite from "./UserFavorite";
 import GuestFavorite from "./GuestFavorite";
 import UserCartButton from "./UserCartButton";
 import GuestCartButton from "./GuestCartButton";
-export default function SinglePost({ post }) {
-  const session = { user: { userId: "234" } }; // Placeholder for session data, replace with actual session logic
+import { auth } from "@/lib/auth";
+export default async function SinglePost({ post }) {
+  const session = await auth();
   return (
     <div className="shadow-indigo-100 shadow-xl w-80 sm:w-64 md:w-80 lg:w-72 xl:w-90  hover:shadow-2xl hover:shadow-indigo-200 my-7 mx-7 transition-shadow duration-300 rounded-b-xl group">
       <div

@@ -9,7 +9,7 @@ export default function ShoppingCart({ session }) {
 
   const fetchCart = async () => {
     if (session?.user) {
-      const cartItems = await getCartItems();
+      const cartItems = await getCartItems(session.user.userId);
       setCartItemCount(cartItems.length);
     } else {
       const guestCart = JSON.parse(localStorage.getItem("guest_cart") || "[]");

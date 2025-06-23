@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function Menu() {
   const links = [
@@ -11,6 +11,11 @@ export default function Menu() {
     { name: "About", url: "/about" },
     { name: "Contact", url: "/contact" },
   ];
+  useEffect(() => {
+    const fromPage = window.location.pathname;
+    localStorage.setItem("redirectAfterLogin", fromPage);
+  }, []);
+
   const [isOpen, setIsOpen] = useState(false);
   return (
     <div className="ml-2">

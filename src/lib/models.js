@@ -37,7 +37,30 @@ const cartSchema = mongoose.Schema({
   },
 });
 
+const userSchema = mongoose.Schema({
+  _id: {
+    type: String,
+    required: true,
+  },
+  name: {
+    type: String,
+    required: true,
+  },
+  email: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  phone: {
+    type: String,
+  },
+  city: {
+    type: String,
+  },
+});
+
 export const Post = mongoose.models?.Post || mongoose.model("Post", postSchema);
 export const Cart = mongoose.models?.Cart || mongoose.model("Cart", cartSchema);
 export const Wishlist =
   mongoose.models?.Wishlist || mongoose.model("Wishlist", wishlistSchema);
+export const User = mongoose.models?.User || mongoose.model("User", userSchema);

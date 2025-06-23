@@ -3,6 +3,7 @@ import { getGuestCartItems } from "@/lib/storage";
 import { Heart, IndianRupee, ShoppingCart, Trash2 } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import CheckoutButton from "../Userview/CheckoutButton";
 
 export default function GuestCart({ reloadFlag, triggerReload }) {
   const [cartItems, setCartItems] = useState([]);
@@ -137,12 +138,7 @@ export default function GuestCart({ reloadFlag, triggerReload }) {
                 <span className="text-2xl text-indigo-600">{total}</span>
               </div>
             </div>
-            <button
-              className="w-full bg-gradient-to-r from-indigo-600 to-purple-600 hover:to-purple-700 text-white font-bold rounded-xl transition-all transform duration-300 hover:scale-105 active:scale-95 shadow-lg hover:shadow-xl"
-              style={{ padding: "16px 24px" }}
-            >
-              Proceed to Buy
-            </button>
+            <CheckoutButton userId={null} />
           </div>
         </div>
       )}

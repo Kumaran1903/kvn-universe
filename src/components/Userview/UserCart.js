@@ -5,10 +5,11 @@ import {
 } from "@/lib/data";
 import { Heart, IndianRupee, ShoppingCart, Trash2 } from "lucide-react";
 import Image from "next/image";
+import CheckoutButton from "./CheckoutButton";
 
-export default async function UserCart() {
-  const cartItems = await getCartItems();
-  const total = cartItems.reduce((sum, item) => sum + item.cost, 0)+10;
+export default async function UserCart({ userId }) {
+  const cartItems = await getCartItems(userId);
+  const total = cartItems.reduce((sum, item) => sum + item.cost, 0);
 
   return (
     <div className="min-h-[60vh] bg-gradient-to-br from-slate-100 to-indigo-100 rounded-2xl shadow-xl overflow-hidden border-indigo-200">
@@ -53,7 +54,7 @@ export default async function UserCart() {
                     <Image
                       src="/img1.png"
                       fill
-                      alt={item.title}
+                      alt="/img1.png"
                       className="object-contain transition-transform duration-300 group-hover:scale-110"
                     />
                   </div>
@@ -68,7 +69,8 @@ export default async function UserCart() {
                   </div>
                   <div className="flex gap-2">
                     <form action={addWishlistDeleteCart}>
-                      <input type="hidden" value={item.title} name="title" />
+                      <input type="hidden" value={userId} name="userId" />
+                      <input type="hidden" value={item.id} name="productId" />
                       <button
                         className="bg-indigo-100 hover:bg-indigo-600 hover:text-white text-indigo-600 rounded-lg transition-all transform duration-300 hover:scale-110 active:scale-95 cursor-pointer"
                         style={{ padding: "9px" }}
@@ -77,7 +79,8 @@ export default async function UserCart() {
                       </button>
                     </form>
                     <form action={removeFromCart}>
-                      <input type="hidden" value={item.title} name="title" />
+                      <input type="hidden" value={userId} name="userId" />
+                      <input type="hidden" value={item.id} name="productId" />
                       <button
                         className="bg-red-100 hover:bg-red-600 text-red-600 hover:text-white rounded-lg transition-all transform duration-300 hover:scale-110 active:scale-95 cursor-pointer"
                         style={{ padding: "9px" }}
@@ -106,12 +109,7 @@ export default async function UserCart() {
                 <span className="text-2xl text-indigo-600 ">{total}</span>
               </div>
             </div>
-            <button
-              className="cursor-pointer w-full bg-gradient-to-r from-indigo-600 to-purple-600 hover:to-purple-700 text-white font-bold rounded-xl transition-all transform duration-300 hover:scale-105 active:scale-95 shadow-lg hover:shadow-xl flex items-center justify-center gap-3"
-              style={{ padding: "16px 24px" }}
-            >
-              Proceed to Buy
-            </button>
+            <CheckoutButton userId={userId} />
           </div>
         </div>
       )}

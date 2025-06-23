@@ -5,9 +5,8 @@ import {
 } from "@/lib/data";
 import { Heart, IndianRupee, ShoppingCart, X } from "lucide-react";
 import Image from "next/image";
-export default async function UserWishlist() {
-  const session = { user: { userId: "234" } }; // Placeholder for session data, replace with actual session logic
-  const wishlistItems = await getWishListItems();
+export default async function UserWishlist({ userId }) {
+  const wishlistItems = await getWishListItems(userId);
   return (
     <div className="min-h-[60vh] bg-gradient-to-br from-indigo-50 to-purple-50 border-indigo-100 rounded-2xl shadow-xl overflow-hidden">
       {/* head */}
@@ -66,7 +65,8 @@ export default async function UserWishlist() {
                   </div>
                   <div className="flex gap-2">
                     <form action={removeFromWishListAddToCart}>
-                      <input type="hidden" value={item.id} name="id" />
+                      <input type="hidden" value={userId} name="userId" />
+                      <input type="hidden" value={item.id} name="productId" />
                       <button
                         type="submit"
                         className="bg-indigo-100 hover:bg-indigo-600 text-indigo-600 hover:text-white rounded-xl transition-all duration-300 transform hover:scale-110 active:scale-95 cursor-pointer"
@@ -76,7 +76,8 @@ export default async function UserWishlist() {
                       </button>
                     </form>
                     <form action={removeFromWishlist}>
-                      <input type="hidden" value={item.title} name="title" />
+                      <input type="hidden" value={userId} name="userId" />
+                      <input type="hidden" value={item.id} name="productId" />
                       <button
                         className="bg-red-100 hover:bg-red-500 text-red-500 hover:text-white rounded-xl transition-all transform duration-300 hover:scale-110 active:scale-95 cursor-pointer"
                         style={{ padding: "8px" }}

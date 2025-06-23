@@ -1,6 +1,8 @@
 import Link from "next/link";
 import Menu from "./Menu";
 import ShoppingCart from "./ShoppingCart";
+import { auth } from "@/lib/auth";
+import { handleLogout } from "@/lib/action";
 
 export default async function Navbar() {
   const links = [
@@ -10,7 +12,8 @@ export default async function Navbar() {
     { name: "About", url: "/about" },
     { name: "Contact", url: "/contact" },
   ];
-  const session = {}; // if will replace it when login is implemented
+  const session = await auth();
+  // console.log(session);
   return (
     <div className="fixed top-0 left-0 w-full bg-white z-10">
       <div className="relative container mx-auto w-4/5 h-20 flex items-center justify-between">
@@ -28,6 +31,18 @@ export default async function Navbar() {
               {item.name}
             </Link>
           ))}
+          {session?.user ? (
+            <form action={handleLogout}>
+              <button
+                type="submit"
+                className="relative cursor-pointer uppercase text-gray-600 hover:text-indigo-600 transition-color duration-300 after:absolute after:left-1/2 after:bottom-0 after:w-0 after:h-[2px] after:bg-indigo-600 after:transform after:-translate-x-1/2 hover:after:w-full after:transition-all after:duration-300"
+              >
+                Logout
+              </button>
+            </form>
+          ) : (
+            <Link href="/login">Login</Link>
+          )}
         </div>
         <div className="flex items-center space-x-5">
           <ShoppingCart session={session} />

@@ -2,9 +2,10 @@
 
 import GuestView from "@/components/Guestview/Guestview";
 import UserView from "@/components/Userview/Userview";
+import { auth } from "@/lib/auth";
 
 const WishlistCartTemplate = async () => {
-  const session = null; // replace with: await auth();
+  const session = await auth();
 
   return (
     <div className="mb-64 lg:mb-0">
