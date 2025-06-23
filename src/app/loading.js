@@ -7,7 +7,7 @@ function Loading() {
 // Gradient Spinner
 const GradientSpinner = ({ size = 40 }) => {
   return (
-    <div className="flex items-center justify-center">
+    <div className="flex items-center justify-center h-[85vh]">
       <div
         className="animate-spin rounded-full border-4 border-transparent"
         style={{

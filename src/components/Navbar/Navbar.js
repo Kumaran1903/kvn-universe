@@ -13,9 +13,8 @@ export default async function Navbar() {
     { name: "Contact", url: "/contact" },
   ];
   const session = await auth();
-  // console.log(session);
   return (
-    <div className="fixed top-0 left-0 w-full bg-white z-10">
+    <div className="fixed top-0 left-0 w-full bg-white z-25">
       <div className="relative container mx-auto w-4/5 h-20 flex items-center justify-between">
         {/* Logo */}
         <div className="text-xl font-bold text-gray-800">Logo</div>

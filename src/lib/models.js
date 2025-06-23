@@ -53,8 +53,12 @@ const userSchema = mongoose.Schema({
   },
   phone: {
     type: String,
+    unique: true,
   },
   city: {
+    type: String,
+  },
+  instaId: {
     type: String,
   },
 });

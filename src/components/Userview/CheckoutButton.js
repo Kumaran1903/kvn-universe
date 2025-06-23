@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { useEffect } from "react";
 
-export default function CheckoutButton({ userId }) {
+export default function CheckoutButton( ) {
   useEffect(() => {
     const fromPage = window.location.pathname;
     localStorage.setItem("redirectAfterLogin", fromPage);

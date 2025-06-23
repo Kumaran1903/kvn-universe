@@ -5,7 +5,7 @@ import {
 } from "@/lib/data";
 import { Heart, IndianRupee, ShoppingCart, Trash2 } from "lucide-react";
 import Image from "next/image";
-import CheckoutButton from "./CheckoutButton";
+import CheckoutButtonWrapper from "./CheckoutButtonWrapper";
 
 export default async function UserCart({ userId }) {
   const cartItems = await getCartItems(userId);
@@ -109,7 +109,7 @@ export default async function UserCart({ userId }) {
                 <span className="text-2xl text-indigo-600 ">{total}</span>
               </div>
             </div>
-            <CheckoutButton userId={userId} />
+            <CheckoutButtonWrapper />
           </div>
         </div>
       )}

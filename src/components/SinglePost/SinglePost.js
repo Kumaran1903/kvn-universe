@@ -3,8 +3,8 @@ import Image from "next/image";
 import UserFavorite from "./UserFavorite";
 import GuestFavorite from "./GuestFavorite";
 import UserCartButton from "./UserCartButton";
-import GuestCartButton from "./GuestCartButton";
 import { auth } from "@/lib/auth";
+import GuestCartButtonWrapper from "./GuestCartButtonWrapper";
 export default async function SinglePost({ post }) {
   const session = await auth();
   return (
@@ -44,7 +44,7 @@ export default async function SinglePost({ post }) {
             {session?.user ? (
               <UserCartButton post={post} userId={session.user.userId} />
             ) : (
-              <GuestCartButton post={post} />
+              <GuestCartButtonWrapper post={post} />
             )}
           </span>
         </div>
