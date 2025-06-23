@@ -1,8 +1,8 @@
-import { auth } from "./lib/auth"; // from auth.ts
+import { auth } from "./lib/auth";
 import { NextResponse } from "next/server";
 
 export default async function middleware(req) {
-  const session = await auth();
+  const session = await auth(req);
   const url = req.nextUrl.clone();
 
   const isOnLoginPage = url.pathname.startsWith("/login");
