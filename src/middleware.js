@@ -1,18 +1,20 @@
-import { auth } from "./lib/auth";
+import { getToken } from "next-auth/jwt";
 import { NextResponse } from "next/server";
 
+const secret = process.env.AUTH_SECRET;
+
 export default async function middleware(req) {
-  const session = await auth(req);
+  const token = await getToken({ req, secret });
   const url = req.nextUrl.clone();
 
   const isOnLoginPage = url.pathname.startsWith("/login");
   const isOnCheckoutPage = url.pathname.startsWith("/checkout");
 
-  if (!session?.user && isOnCheckoutPage) {
+  if (!token && isOnCheckoutPage) {
     return NextResponse.redirect(new URL("/login", req.url));
   }
 
-  if (session?.user && isOnLoginPage) {
+  if (token && isOnLoginPage) {
     return NextResponse.redirect(new URL("/", req.url));
   }
 

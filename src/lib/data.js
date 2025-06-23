@@ -56,6 +56,7 @@ export const getWishListItems = async (userId) => {
 
 export const addOrDeleteWishlist = async (formData) => {
   const { userId, productId } = Object.fromEntries(formData);
+  console.log(userId,"****", productId);
   try {
     await connectToDB();
     const wishlist = await Wishlist.findOne({ userId: userId });
