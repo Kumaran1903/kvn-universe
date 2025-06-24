@@ -1,26 +1,18 @@
 import { getToken } from "next-auth/jwt";
 import { NextResponse } from "next/server";
 
-const secret = process.env.NEXTAUTH_SECRET;
-
-export default async function middleware(req) {
-  const token = await getToken({ req, secret });
-  const url = req.nextUrl.clone();
-
-  const isOnLoginPage = url.pathname.startsWith("/login");
-  const isOnCheckoutPage = url.pathname.startsWith("/checkout");
+export default async function middleware(request) {
+  const token = request.cookies.get("authjs.session-token") || "";
+  const isOnLoginPage = request.nextUrl.pathname.startsWith("/login");
+  const isOnCheckoutPage = request.nextUrl.pathname.startsWith("/checkout");
 
   if (!token && isOnCheckoutPage) {
-    return NextResponse.redirect(new URL("/login", req.url));
+    return NextResponse.redirect(new URL("/login", request.url));
   }
 
   if (token && isOnLoginPage) {
-    return NextResponse.redirect(new URL("/", req.url));
+    return NextResponse.redirect(new URL("/", request.url));
   }
 
-  return NextResponse.next();
+  NextResponse.next();
 }
-
-export const config = {
-  matcher: ["/((?!api|_next/static|_next/image|favicon.ico).*)"],
-};

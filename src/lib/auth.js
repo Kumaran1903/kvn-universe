@@ -17,17 +17,16 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     async jwt({ token, user }) {
       if (user?.email) {
         await connectToDB();
-        const existingUser = await User.findOne({ email: user.email });
+
+        const existingUser = await User.findOne({ email: user.email }).lean();
         if (!existingUser) {
-          const newUser = await User.create({
+          await User.create({
             _id: user.id,
             name: user.name,
             email: user.email,
           });
-          token.id = newUser._id;
-        } else {
-          token.id = existingUser._id;
         }
+        token.id = user.id;
       }
       return token;
     },
