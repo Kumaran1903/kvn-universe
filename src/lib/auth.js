@@ -26,6 +26,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             _id: user.id,
             name: user.name,
             email: user.email,
+            phone: null,
           });
           token.id = newUser._id;
         } else {

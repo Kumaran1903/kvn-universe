@@ -210,9 +210,9 @@ export default function PaymentForm({
               return alert("Enter UPI ID");
             }
 
-            // Generate dynamic UPI link with user's UPI ID
+            const merchantUPI = process.env.UPI_ID;
             const note = "Payment for Order";
-            const upiLink = `upi://pay?pa=${upiId}&pn=${profile.name}&am=${totalAmount}&tn=${note}&cu=INR`;
+            const upiLink = `upi://pay?pa=${merchantUPI}&pn=${profile.name}&am=${totalAmount}&tn=${note}&cu=INR`;
 
             window.open(upiLink, "_blank");
           }}
