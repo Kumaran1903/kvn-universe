@@ -2,7 +2,7 @@ import { getToken } from "next-auth/jwt";
 import { NextResponse } from "next/server";
 
 export default async function middleware(request) {
-  const token = request.cookies.get("authjs.session-token") || "";
+  const token = request.cookies.get("__Secure-authjs.session-token") || "";
   const isOnLoginPage = request.nextUrl.pathname.startsWith("/login");
   const isOnCheckoutPage = request.nextUrl.pathname.startsWith("/checkout");
 
