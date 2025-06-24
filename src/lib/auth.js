@@ -13,20 +13,24 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       clientSecret: process.env.AUTH_GOOGLE_CLIENT_SECRET,
     }),
   ],
+  session: {
+    strategy: "jwt", // ✅ Required for getToken() to work
+  },
   callbacks: {
     async jwt({ token, user }) {
       if (user?.email) {
         await connectToDB();
-
-        const existingUser = await User.findOne({ email: user.email }).lean();
+        const existingUser = await User.findOne({ email: user.email });
         if (!existingUser) {
-          await User.create({
+          const newUser = await User.create({
             _id: user.id,
             name: user.name,
             email: user.email,
           });
+          token.id = newUser._id;
+        } else {
+          token.id = existingUser._id;
         }
-        token.id = user.id;
       }
       return token;
     },

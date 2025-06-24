@@ -2,7 +2,14 @@ import { getToken } from "next-auth/jwt";
 import { NextResponse } from "next/server";
 
 export default async function middleware(request) {
-  const token = request.cookies.get("__Secure-authjs.session-token") || "";
+  const token = await getToken({
+    req: request,
+    secret: process.env.NEXTAUTH_SECRET,
+    secureCookie: process.env.NODE_ENV === "production",
+  });
+
+  console.log("🔥 TOKEN IN MIDDLEWARE:", token); // Check Vercel logs
+
   const isOnLoginPage = request.nextUrl.pathname.startsWith("/login");
   const isOnCheckoutPage = request.nextUrl.pathname.startsWith("/checkout");
 
@@ -14,5 +21,9 @@ export default async function middleware(request) {
     return NextResponse.redirect(new URL("/", request.url));
   }
 
-  NextResponse.next();
+  return NextResponse.next();
 }
+
+export const config = {
+  matcher: ["/((?!api|_next/static|_next/image|favicon.ico).*)"],
+};

@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "jsonwebtoken": "^9.0.2",
     "lucide-react": "^0.515.0",
     "mongoose": "^8.15.2",
     "next": "15.3.3",

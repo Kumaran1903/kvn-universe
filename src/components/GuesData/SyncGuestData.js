@@ -21,7 +21,7 @@ export default function SyncGuestData({ userId }) {
       });
     }
     router.refresh();
-  }, []);
+  }, [router, userId]);
 
   return null; // No UI
 }

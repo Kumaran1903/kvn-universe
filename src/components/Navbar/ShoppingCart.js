@@ -7,21 +7,23 @@ import { useEffect, useState } from "react";
 export default function ShoppingCart({ session }) {
   const [cartItemCount, setCartItemCount] = useState(0);
 
-  const fetchCart = async () => {
-    if (session?.user) {
-      const cartItems = await getCartItems(session.user.userId);
-      setCartItemCount(cartItems.length);
-    } else {
-      const guestCart = JSON.parse(localStorage.getItem("guest_cart") || "[]");
-      setCartItemCount(guestCart.length);
-    }
-  };
-
   useEffect(() => {
+    const fetchCart = async () => {
+      if (session?.user) {
+        const cartItems = await getCartItems(session.user.userId);
+        setCartItemCount(cartItems.length);
+      } else {
+        const guestCart = JSON.parse(
+          localStorage.getItem("guest_cart") || "[]"
+        );
+        setCartItemCount(guestCart.length);
+      }
+    };
+
     fetchCart();
     window.addEventListener("cart-updated", fetchCart);
     return () => window.removeEventListener("cart-updated", fetchCart);
-  }, [session]);
+  }, [session]); 
 
   return (
     <Link href="/cart" className="relative h-10 w-6">
