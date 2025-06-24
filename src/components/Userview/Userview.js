@@ -1,7 +1,7 @@
 import { auth } from "@/lib/auth";
 import UserCart from "./UserCart";
 import UserWishlist from "./UserWishlist";
-import SyncGuestData from "../GuesData/SyncGuestData";
+import SyncGuestData from "../SyncGuesData/SyncGuestData";
 
 export default async function UserView() {
   const session = await auth();

@@ -80,7 +80,7 @@ export default function GuestWishlist({ reloadFlag, triggerReload }) {
                 <div className="flex items-center gap-4">
                   <div className="h-20 w-28 relative overflow-hidden">
                     <Image
-                      src="/img1.png"
+                      src={item.image}
                       fill
                       alt={item.title}
                       className="object-contain rounded-lg group-hover:scale-110 transition-transform duration-300"

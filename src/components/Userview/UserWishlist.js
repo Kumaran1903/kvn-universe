@@ -48,7 +48,7 @@ export default async function UserWishlist({ userId }) {
                 <div className="flex items-center gap-4">
                   <div className="h-20 w-28 relative overflow-hidden ">
                     <Image
-                      src="/img1.png"
+                      src={item.image}
                       fill
                       alt={item.title}
                       className="object-contain rounded-lg transition-transform duration-300 group-hover:scale-110"

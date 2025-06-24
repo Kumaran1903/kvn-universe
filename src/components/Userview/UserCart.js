@@ -52,7 +52,7 @@ export default async function UserCart({ userId }) {
                 <div className="flex gap-3 items-center">
                   <div className="relative h-20 w-28 rounded-lg overflow-hidden">
                     <Image
-                      src="/img1.png"
+                      src={item.image}
                       fill
                       alt="/img1.png"
                       className="object-contain transition-transform duration-300 group-hover:scale-110"

@@ -4,7 +4,7 @@ import Link from "next/link";
 export default function Footer() {
   return (
     <div
-      className=" bg-slate-200 text-gray-600"
+      className=" bg-white/70 backdrop-blur-lg text-gray-600"
       style={{ padding: "20px 0px" }}
     >
       <div
@@ -18,7 +18,7 @@ export default function Footer() {
           <div>+91987654321</div>
           <div className="sm:flex space-x-3 hidden">
             <Link
-              href="https://www.youtube.com" // <-- Replace with your actual channel
+              href="https://www.youtube.com/@KVNUNIVERSE"
               target="_blank"
               className="h-8 w-8 ring-2 flex items-center justify-center rounded-full overflow-hidden cursor-pointer bg-gray-600 transition-all duration-300 ease-in-out hover:ring-violet-400 hover:bg-violet-400"
             >
@@ -33,7 +33,7 @@ export default function Footer() {
 
             <Link
               href="/"
-              target="_blank"
+              // target="_blank"
               className="h-8 w-8 ring-2 flex items-center justify-center rounded-full overflow-hidden cursor-pointer  bg-gray-600 hover:ring-violet-400 hover:bg-violet-400"
             >
               <Image
@@ -45,7 +45,7 @@ export default function Footer() {
               />
             </Link>
             <Link
-              href="/"
+              href="https://www.instagram.com/kevin_universe_534?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
               target="_blank"
               className="h-8 w-8 ring-2 flex items-center justify-center rounded-full overflow-hidden cursor-pointer  bg-gray-600 hover:ring-violet-400 hover:bg-violet-400"
             >
@@ -66,13 +66,13 @@ export default function Footer() {
           <h3 className="text-lg text-gray-800 font-bold">Quick Links</h3>
           <Link href="/store">Store</Link>
           <Link href="/store">Wishlist</Link>
-          <Link href="/">Account</Link>
+          <Link href="/checkout">Account</Link>
         </div>
         <div className="hidden sm:flex flex-col space-y-4">
           <h3 className="text-lg text-gray-800 font-bold">Important Links</h3>
           <Link href="/about">AboutUs</Link>
           <Link href="/contact">ContactUs</Link>
-          <Link href="/">Privacy Policy</Link>
+          <Link href="/policies/privacy-policy">Privacy Policy</Link>
 
           <span className="hidden sm:block mt-14  lg:mt-13 text-right text-sm md:text-md font-semibold">
             All rights Reserved.

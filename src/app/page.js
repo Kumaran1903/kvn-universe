@@ -148,7 +148,7 @@ export default function Home() {
           </p>
           <div className="group">
             <Link
-              href="https://youtube.com"
+              href="https://www.youtube.com/@KVNUNIVERSE"
               target="_blank"
               className=" rounded-md flex items-center justify-center space-x-2 bg-black w-fit mb-7  transition-transform duration-500 ease-in-out group-hover:scale-110"
               style={{ padding: "8px 12px" }}

@@ -87,7 +87,7 @@ export default function GuestCart({ reloadFlag, triggerReload }) {
                 <div className="flex gap-3 items-center">
                   <div className="relative h-20 w-28 rounded-lg overflow-hidden">
                     <Image
-                      src="/img1.png"
+                      src={item.image}
                       fill
                       alt={item.title}
                       className="object-contain group-hover:scale-110 transition-transform duration-300"

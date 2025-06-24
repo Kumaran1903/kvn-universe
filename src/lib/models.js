@@ -61,6 +61,10 @@ const userSchema = mongoose.Schema({
   instaId: {
     type: String,
   },
+  isAdmin: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 export const Post = mongoose.models?.Post || mongoose.model("Post", postSchema);

@@ -20,7 +20,7 @@ export default async function SinglePost({ post }) {
             <GuestFavorite post={post} />
           )}
           <Image
-            src="/img1.png"
+            src={post.image}
             fill
             alt=""
             className="transition-transform duration-500 ease-in-out group-hover:scale-110 "

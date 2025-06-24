@@ -1,5 +1,6 @@
 "use client";
 import { signIn } from "next-auth/react";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 
 export default function Login() {
@@ -64,13 +65,19 @@ export default function Login() {
         <div className="text-center" style={{ marginTop: "24px" }}>
           <p className="text-sm text-gray-500">
             By signing in, you agree to our{" "}
-            <a href="#" className="text-blue-600 hover:underline">
+            <Link
+              href="/policies/terms"
+              className="text-blue-600 hover:underline"
+            >
               Terms of Service
-            </a>{" "}
+            </Link>{" "}
             and{" "}
-            <a href="#" className="text-blue-600 hover:underline">
+            <Link
+              href="/policies/privacy-policy"
+              className="text-blue-600 hover:underline"
+            >
               Privacy Policy
-            </a>
+            </Link>
           </p>
         </div>
       </div>

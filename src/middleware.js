@@ -8,8 +8,6 @@ export default async function middleware(request) {
     secureCookie: process.env.NODE_ENV === "production",
   });
 
-  console.log("🔥 TOKEN IN MIDDLEWARE:", token); // Check Vercel logs
-
   const isOnLoginPage = request.nextUrl.pathname.startsWith("/login");
   const isOnCheckoutPage = request.nextUrl.pathname.startsWith("/checkout");
 

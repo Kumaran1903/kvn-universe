@@ -175,13 +175,6 @@ export default function PaymentForm({
                   </p>
                 </div>
               </div>
-              <button
-                onClick={() => window.open(generateUPILink(), "_blank")}
-                className="bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors"
-                style={{ padding: "8px 16px", marginTop: "12px" }}
-              >
-                Open UPI App
-              </button>
             </div>
           )}
         </div>
@@ -210,9 +203,8 @@ export default function PaymentForm({
               return alert("Enter UPI ID");
             }
 
-            const merchantUPI = process.env.UPI_ID;
             const note = "Payment for Order";
-            const upiLink = `upi://pay?pa=${merchantUPI}&pn=${profile.name}&am=${totalAmount}&tn=${note}&cu=INR`;
+            const upiLink = `upi://pay?pa=9916687534@ptaxis&pn=${profile.name}&am=${totalAmount}&tn=${note}&cu=INR`;
 
             window.open(upiLink, "_blank");
           }}
