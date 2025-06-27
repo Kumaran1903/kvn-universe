@@ -4,7 +4,7 @@ import Link from "next/link";
 export default function Home() {
   return (
     <div className="">
-      <div className="h-[50vh] lg:h-[90vh] w-full bg-gradient-to-t  from-indigo-200 ">
+      <div className="h-[50vh] lg:h-[90vh] w-full ">
         <div className="container mx-auto w-4/5 h-full flex items-center mt-10 lg:mt-0">
           {/* Left Section */}
           <div className="w-3.2/7 h-full flex flex-col justify-center space-y-3 ">
@@ -18,27 +18,30 @@ export default function Home() {
             >
               Stunning Intros
             </span>
-            <span className="text-sm xl:text-md  text-gray-700">
+            <span className="text-sm xl:text-md font-semibold  text-gray-700">
               Personalized intros in the style of your most-loved movies and
               shows.
             </span>
-            <span className="text-sm xl:text-md text-gray-700">
+            <span className="text-sm xl:text-md font-semibold text-gray-700">
               Perfect for your social media, special events, or just for fun.
             </span>
           </div>
 
           {/* Right Section */}
           <div className="w-4/7 h-full relative hidden md:block">
-            <Image src="/temp.png" fill alt="temp" className="object-contain" />
+            <Image
+              src="/temp.png"
+              fill
+              alt="temp"
+              sizes="100%"
+              className="object-contain"
+            />
           </div>
         </div>
       </div>
       {/* Social Media Scrolling Section */}
-      <div
-        className=" mx-auto  w-full bg-indigo-50 "
-        style={{ padding: "20px" }}
-      >
-        <div className="container mx-auto w-3/4 overflow-hidden bg-indigo-50 ">
+      <div className=" mx-auto  w-full " style={{ padding: "20px" }}>
+        <div className="container mx-auto w-3/4 overflow-hidden  ">
           <div className="scroll-wrapper">
             <div className="scroll-content">
               {[...Array(2)].map((_, i) => (
@@ -68,7 +71,7 @@ export default function Home() {
         </div>
       </div>
       {/* Popular Opening Intro Section  */}
-      <div className="w-full bg-indigo-100" style={{ padding: "75px 0px" }}>
+      <div className="w-full " style={{ padding: "75px 0px" }}>
         <div className="container mx-auto w-6/7 h-auto">
           <h3 className="text-center  text-2xl md:text-4xl font-bold mb-20">
             Popular Opening Intros
@@ -81,6 +84,7 @@ export default function Home() {
                 <Image
                   src="/intro1.png"
                   fill
+                  sizes="100%"
                   alt="Intro 1"
                   className="object-contain rounded-md transition-transform duration-500 ease-in-out group-hover:scale-110"
                 />
@@ -97,6 +101,7 @@ export default function Home() {
                 <Image
                   src="/intro2.png"
                   fill
+                  sizes="100%"
                   alt="Intro 2"
                   className="object-contain rounded-md transition-transform duration-500 ease-in-out group-hover:scale-110"
                 />
@@ -113,6 +118,7 @@ export default function Home() {
                 <Image
                   src="/intro3.png"
                   fill
+                  sizes="100%"
                   alt="Intro 3"
                   className="object-contain rounded-md transition-transform duration-500 ease-in-out group-hover:scale-110"
                 />
@@ -132,12 +138,18 @@ export default function Home() {
         </div>
       </div>
       {/*  */}
-      <div className="w-full  h-[75vh] flex flex-col md:flex-row items-center justify-center bg-indigo-50 shadow-[0_-10px_20px_rgba(99,102,241,0.15),0_10px_20px_rgba(99,102,241,0.15)]">
+      <div className="w-full  h-[75vh] flex flex-col md:flex-row items-center justify-center  shadow-[0_-10px_20px_rgba(99,102,241,0.15),0_10px_20px_rgba(99,102,241,0.15)]">
         <div className="relative h-full w-full md:w-1/2 m-1">
-          <Image src="/pentagon.png" fill alt="/" className="object-contain" />
+          <Image
+            src="/pentagon.png"
+            fill
+            alt="/"
+            sizes="100%"
+            className="object-contain"
+          />
         </div>
         <div className=" w-3/4 md:w-1/2  md:mx-10 flex flex-col space-y-3 items-start sm:items-center md:items-start ">
-          <h2 className=" text-lg  font-bold">
+          <h2 className=" text-xl md:text-2xl  font-bold">
             Check Out our Complete Intro Catalogue!
           </h2>
           <p className="text-gray-600 ">

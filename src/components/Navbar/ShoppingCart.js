@@ -20,10 +20,10 @@ export default function ShoppingCart({ session }) {
       }
     };
 
-    fetchCart();  
+    fetchCart();
     window.addEventListener("cart-updated", fetchCart);
     return () => window.removeEventListener("cart-updated", fetchCart);
-  }, [session]); 
+  }, [session]);
 
   return (
     <Link href="/cart" className="relative h-10 w-6">
@@ -31,6 +31,7 @@ export default function ShoppingCart({ session }) {
         src="/shopping_cart.png"
         alt="Cart"
         fill
+        sizes="100%"
         className="object-contain cursor-pointer"
       />
       <span className="absolute -top-4 -right-5 bg-indigo-600 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">

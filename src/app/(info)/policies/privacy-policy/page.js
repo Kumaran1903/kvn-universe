@@ -40,7 +40,7 @@ export default function PrivacyPolicy() {
         </h2>
         <p>
           For privacy concerns, contact us at{" "}
-          <strong>support@prashanthkevin@gmail.com</strong>
+          <strong>support@kevinmj534@gmail.com</strong>
           <br />
         </p>
       </div>

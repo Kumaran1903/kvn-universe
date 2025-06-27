@@ -38,7 +38,7 @@ export default function ShippingPolicy() {
           </h2>
           <p>
             For shipping inquiries, email us at{" "}
-            <strong>shipping@prashanthkevin@gmail.com</strong>.
+            <strong>shipping@kevinmj534@gmail.com</strong>.
             <br />
           </p>
         </section>

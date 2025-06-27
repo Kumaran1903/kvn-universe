@@ -82,7 +82,7 @@ export default function Contact() {
   }
 
   return (
-    <div className=" bg-gradient-to-t from-indigo-300 min-h-screen py-16">
+    <div className=" bg-gradient-to-t min-h-screen py-16">
       <div
         className="container mx-auto px-4 "
         style={{ paddingBottom: "40px" }}
@@ -93,7 +93,8 @@ export default function Contact() {
 
         {/* Contact Info & Form */}
         <div
-          className="w-4/5 mx-auto flex flex-col lg:flex-row bg-white/20 backdrop:blur-3xl md:bg-white rounded-xl shadow-xl overflow-hidden space-y-10"
+          className="w-4/5 mx-auto flex flex-col lg:flex-row bg-white/20 backdrop:blur-xl d:bg-white rounded-xl shadow-[0_0_30px_rgba(0,0,0,0.15)] overflow-hidden space-y-10"
+          // className="w-4/5 mx-auto flex flex-col lg:flex-row bg-white/20 backdrop:blur-xl d:bg-white rounded-xl shadow-xl overflow-hidden space-y-10"
           style={{ padding: "80px 30px" }}
         >
           {/* Left: Contact Info */}
@@ -171,7 +172,7 @@ export default function Contact() {
                 type="button"
                 onClick={handleSubmit}
                 disabled={isLoading}
-                className="w-full bg-indigo-500 text-white py-3 rounded-md font-semibold hover:bg-indigo-600 transition duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full bg-gradient-to-r from-indigo-600 to-purple-600 hover:to-purple-700 text-white py-3 rounded-md font-semibold transition duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
                 style={{ padding: "8px 10px" }}
               >
                 {isLoading ? "Sending..." : "Send Message"}

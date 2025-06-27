@@ -5,7 +5,7 @@ import { getCartItems } from "@/lib/data";
 export default async function CheckoutPage() {
   const session = await auth();
   const cartItems = await getCartItems(session?.user?.userId);
-  const totalAmount = cartItems.reduce((sum, item) => sum + item.cost, 0);
+  const totalAmount = cartItems.reduce((sum, item) => sum + item.price, 0);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-50 to-blue-50 py-10 px-6">

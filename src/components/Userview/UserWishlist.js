@@ -50,6 +50,7 @@ export default async function UserWishlist({ userId }) {
                     <Image
                       src={item.image}
                       fill
+                      sizes="100%"
                       alt={item.title}
                       className="object-contain rounded-lg transition-transform duration-300 group-hover:scale-110"
                     />

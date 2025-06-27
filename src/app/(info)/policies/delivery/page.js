@@ -33,7 +33,7 @@ export default function DeliveryPolicy() {
           3. Contact
         </h2>
         <p>
-          Contact <strong>delivery@prashanthkevin@gmail.com</strong> for
+          Contact <strong>delivery@kevinmj534@gmail.com</strong> for
           delivery-related help.
           <br />
         </p>

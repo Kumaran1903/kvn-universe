@@ -33,7 +33,13 @@ export default function Menu({ session }) {
         className="relative h-6 w-6 md:hidden z-30"
         onClick={() => setIsOpen(!isOpen)}
       >
-        <Image src="/menu.png" fill alt="menu" className="object-contain " />
+        <Image
+          src="/menu.png"
+          fill
+          sizes="100%"
+          alt="menu"
+          className="object-contain "
+        />
       </div>
       {isOpen && (
         <div className="fixed inset-0 h-[55vh] z-20 md:hidden bg-white/80 backdrop-blur-lg flex flex-col items-center justify-center space-y-10 font-semibold text-gray-800 uppercase md:text-sm lg:text-md">

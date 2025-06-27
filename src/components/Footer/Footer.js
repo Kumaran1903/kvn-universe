@@ -4,7 +4,7 @@ import Link from "next/link";
 export default function Footer() {
   return (
     <div
-      className=" bg-white/70 backdrop-blur-lg text-gray-600"
+      className=" bg-white/70 shadow-[0_-10px_20px_rgba(99,102,241,0.15),0_10px_20px_rgba(99,102,241,0.15)] backdrop-blur-lg text-gray-600"
       style={{ padding: "20px 0px" }}
     >
       <div

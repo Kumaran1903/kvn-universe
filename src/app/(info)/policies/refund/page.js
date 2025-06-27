@@ -33,7 +33,7 @@ export default function RefundPolicy() {
           3. Contact
         </h2>
         <p>
-          Email us at <strong>refunds@prashanthkevin@gmail.com</strong> for
+          Email us at <strong>refunds@kevinmj534@gmail.com</strong> for
           refund-related concerns.
           <br />
         </p>

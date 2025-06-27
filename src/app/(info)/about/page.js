@@ -1,6 +1,6 @@
 export default function About() {
   return (
-    <div className="min-h-[78vh] mt-40 bg-gradient-to-t from-indigo-300">
+    <div className="min-h-[78vh] mt-40 ">
       <div className="container mx-auto w-full">
         <div className="w-full text-center">
           <span className="text-indigo-900 font-semibold text-3xl w-full">

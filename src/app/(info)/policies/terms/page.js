@@ -30,7 +30,7 @@ export default function TermsOfService() {
         </h2>
         <p>
           You agree not to submit inappropriate content or violate any
-          applicable laws. You’re responsible for content you upload.
+          applicable laws. You&apos;re responsible for content you upload.
         </p>
 
         <h2 className="text-xl font-semibold text-indigo-600 mt-6 mb-2">
@@ -46,7 +46,7 @@ export default function TermsOfService() {
         </h2>
         <p>
           Reach out for queries at{" "}
-          <strong>support@prashanthkevin@gmail.com</strong>
+          <strong>support@kevinmj534@gmail.com</strong>
           <br />
         </p>
       </div>

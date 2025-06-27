@@ -54,6 +54,7 @@ export default async function UserCart({ userId }) {
                     <Image
                       src={item.image}
                       fill
+                      sizes="100%"
                       alt="/img1.png"
                       className="object-contain transition-transform duration-300 group-hover:scale-110"
                     />
