@@ -5,16 +5,23 @@ const postSchema = mongoose.Schema({
     type: String,
     required: true,
   },
-  cost: {
-    type: Number,
-    required: true,
-  },
-  favorite: {
-    type: Boolean,
-  },
   image: {
     type: String,
     required: true,
+  },
+  price: {
+    personal: {
+      type: Number,
+      default: 0,
+    },
+    commercial: {
+      type: Number,
+      default: 0,
+    },
+    selected: {
+      type: Number,
+      default: 0,
+    },
   },
 });
 const wishlistSchema = mongoose.Schema({
@@ -22,9 +29,16 @@ const wishlistSchema = mongoose.Schema({
     type: String,
     required: true,
   },
-  productIds: {
-    type: Array,
-  },
+  products: [
+    {
+      productId: {
+        type: String,
+      },
+      favorite: {
+        type: Boolean,
+      },
+    },
+  ],
 });
 
 const cartSchema = mongoose.Schema({
@@ -67,8 +81,29 @@ const userSchema = mongoose.Schema({
   },
 });
 
+const priceSchema = mongoose.Schema({
+  userId: {
+    type: String,
+    required: true,
+  },
+  usePrice: [
+    {
+      _id: false,
+      productId: {
+        type: String,
+      },
+      price_selected: {
+        type: String,
+        enum: ["personal", "commercial"],
+      },
+    },
+  ],
+});
+
 export const Post = mongoose.models?.Post || mongoose.model("Post", postSchema);
 export const Cart = mongoose.models?.Cart || mongoose.model("Cart", cartSchema);
 export const Wishlist =
   mongoose.models?.Wishlist || mongoose.model("Wishlist", wishlistSchema);
 export const User = mongoose.models?.User || mongoose.model("User", userSchema);
+export const UserPricing =
+  mongoose.models?.UserPricing || mongoose.model("UserPricing", priceSchema);

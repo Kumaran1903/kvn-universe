@@ -5,10 +5,16 @@ import GuestFavorite from "./GuestFavorite";
 import UserCartButton from "./UserCartButton";
 import { auth } from "@/lib/auth";
 import GuestCartButtonWrapper from "./GuestCartButtonWrapper";
+import PriceDropdown from "./PriceDropdown";
+
 export default async function SinglePost({ post }) {
   const session = await auth();
+
   return (
-    <div className="shadow-indigo-100 shadow-xl w-80 sm:w-64 md:w-80 lg:w-72 xl:w-90  hover:shadow-2xl hover:shadow-indigo-200 my-7 mx-7 transition-shadow duration-300 rounded-b-xl group">
+    <div
+      className="mx-auto shadow-indigo-100 shadow-xl w-80 sm:w-64 md:w-80 lg:w-72 xl:w-90  hover:shadow-2xl hover:shadow-indigo-200 my-7 transition-shadow duration-300 rounded-b-xl group"
+      style={{ paddingRight: "10px" }}
+    >
       <div
         className="w-full container mx-auto h-64 lg:h-72 flex flex-col items-center overflow-hidden "
         style={{ paddingBottom: "20px" }}
@@ -32,13 +38,7 @@ export default async function SinglePost({ post }) {
         >
           <div className="flex flex-col space-y-1 ">
             <span className="text-[1rem]">{post?.title}</span>
-            <div
-              className="flex items-center "
-              style={{ padding: " 0px 10px" }}
-            >
-              <IndianRupee className="w-4 h-4 text-gray-600 font-bold" />
-              <span className="text-gray-600 font-bold ">{post?.cost}</span>
-            </div>
+            <PriceDropdown post={post} session={session} />
           </div>
           <span>
             {session?.user ? (

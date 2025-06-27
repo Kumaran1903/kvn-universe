@@ -1,6 +1,7 @@
 "use client";
 import Image from "next/image";
 import React from "react";
+import { useDeviceType } from "@/lib/hooks/useDeviceType";
 
 export default function PaymentForm({
   profile,
@@ -10,11 +11,16 @@ export default function PaymentForm({
   setUpiId,
   totalAmount,
 }) {
-  const isProfileComplete = profile.name && profile.email && profile.phone;
+  const isProfileComplete =
+    profile.name?.trim() &&
+    profile.email?.trim() &&
+    profile.phone?.toString().trim().length >= 10;
+
+  const deviceType = useDeviceType();
 
   return (
     <div
-      className="bg-white rounded-2xl shadow-lg border border-blue-100"
+      className="bg-white rounded-2xl shadow-lg border border-blue-100 "
       style={{ padding: "32px" }}
     >
       <div className="flex items-center" style={{ marginBottom: "32px" }}>
@@ -39,7 +45,6 @@ export default function PaymentForm({
         </div>
       </div>
 
-      {/* Order Summary */}
       <div
         className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-2xl border border-blue-100"
         style={{ padding: "24px", marginBottom: "32px" }}
@@ -79,121 +84,51 @@ export default function PaymentForm({
         </div>
       </div>
 
-      {/* Payment Methods */}
-      <div className="space-y-4" style={{ marginBottom: "32px" }}>
-        <h4 className="font-semibold text-gray-900">Select Payment Method:</h4>
-
-        {/* UPI Payment */}
+      {/* Payment Method shown based on device */}
+      {deviceType === "mobile" ? (
         <div
-          className={`border-2 rounded-xl cursor-pointer transition-all ${
-            paymentMethod === "upi"
-              ? "border-purple-500 bg-purple-50"
-              : "border-gray-200 hover:border-purple-300"
-          }`}
-          style={{ padding: "16px" }}
-          onClick={() => setPaymentMethod("upi")}
+          className="border-2 border-purple-500 bg-purple-50 rounded-xl"
+          style={{ padding: "16px", marginBottom: "32px" }}
         >
-          <div className="flex items-center">
-            <input
-              type="radio"
-              id="upi"
-              name="payment"
-              value="upi"
-              checked={paymentMethod === "upi"}
-              onChange={(e) => setPaymentMethod(e.target.value)}
-              className="text-purple-600 focus:ring-purple-500"
-            />
-            <label
-              htmlFor="upi"
-              className="font-medium text-gray-900"
-              style={{ marginLeft: "12px" }}
-            >
-              UPI Payment
-            </label>
-          </div>
-          {paymentMethod === "upi" && (
-            <div style={{ marginTop: "16px" }}>
-              <input
-                type="text"
-                value={upiId}
-                onChange={(e) => setUpiId(e.target.value)}
-                placeholder="yourname@paytm"
-                className="w-full border-2 border-purple-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-                style={{ padding: "12px" }}
-              />
-            </div>
-          )}
+          <label
+            className="font-medium text-gray-900 block"
+            style={{ marginBottom: "8px" }}
+          >
+            Enter your UPI ID
+          </label>
+          <input
+            type="text"
+            value={upiId}
+            onChange={(e) => setUpiId(e.target.value)}
+            placeholder="yourname@paytm"
+            className="w-full border-2 border-purple-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+            style={{ padding: "12px" }}
+          />
         </div>
-
-        {/* QR Scanner */}
+      ) : (
         <div
-          className={`border-2 rounded-xl cursor-pointer transition-all ${
-            paymentMethod === "scanner"
-              ? "border-blue-500 bg-blue-50"
-              : "border-gray-200 hover:border-blue-300"
-          }`}
-          style={{ padding: "16px" }}
-          onClick={() => setPaymentMethod("scanner")}
+          className="border-2 border-blue-500 bg-blue-50 rounded-xl"
+          style={{ padding: "16px", marginBottom: "32px" }}
         >
-          <div className="flex items-center">
-            <input
-              type="radio"
-              id="scanner"
-              name="payment"
-              value="scanner"
-              checked={paymentMethod === "scanner"}
-              onChange={(e) => setPaymentMethod(e.target.value)}
-              className="text-blue-600 focus:ring-blue-500"
+          <div className="flex flex-col items-center">
+            <Image
+              src="/qr.png"
+              alt="QR Code"
+              height={150}
+              width={250}
+              className="object-contain"
             />
-            <label
-              htmlFor="scanner"
-              className="font-medium text-gray-900"
-              style={{ marginLeft: "12px" }}
+            <p
+              className="text-sm font-medium text-gray-700"
+              style={{ marginTop: "8px" }}
             >
-              QR Code / Scan & Pay
-            </label>
+              Scan to Pay ₹{totalAmount}
+            </p>
           </div>
-          {paymentMethod === "scanner" && (
-            <div className="text-center" style={{ marginTop: "16px" }}>
-              <div
-                className="bg-white rounded-lg border-2 border-dashed border-blue-300 flex items-center justify-center"
-                style={{ padding: "32px" }}
-              >
-                <div className="text-center">
-                  <Image
-                    src="/qr.png"
-                    alt="/qr"
-                    height={150}
-                    width={250}
-                    className="object-contain"
-                  />
-                  <p
-                    className="text-sm font-medium text-gray-700"
-                    style={{ marginTop: "8px" }}
-                  >
-                    Scan to Pay ₹{totalAmount}
-                  </p>
-                </div>
-              </div>
-            </div>
-          )}
         </div>
-      </div>
+      )}
 
-      {/* Pay Button */}
-      {/* <button
-        onClick={handlePayment}
-        disabled={!isProfileComplete}
-        className={`w-full font-bold text-lg rounded-2xl transition-all transform hover:scale-105 ${
-          isProfileComplete
-            ? "bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white shadow-lg"
-            : "bg-gray-300 text-gray-500 cursor-not-allowed"
-        }`}
-        style={{ padding: "18px" }}
-      >
-        {isProfileComplete ? `Pay ₹${totalAmount}` : "Complete Profile to Pay"}
-      </button> */}
-      {paymentMethod === "upi" && (
+      {deviceType === "mobile" && (
         <button
           onClick={() => {
             if (!isProfileComplete) {
@@ -220,7 +155,6 @@ export default function PaymentForm({
         </button>
       )}
 
-      {/* Security Info */}
       <div className="text-center" style={{ marginTop: "20px" }}>
         <div className="flex items-center justify-center">
           <svg

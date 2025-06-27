@@ -7,12 +7,23 @@ export default function GuestCartButton({ post }) {
 
     const productId = post.id;
     const existingCart = JSON.parse(localStorage.getItem("guest_cart") || "[]");
+    const price_selected =
+      localStorage.getItem("price_selected_" + productId) || "personal";
 
-    if (!existingCart.includes(productId)) {
-      existingCart.push(productId);
-      localStorage.setItem("guest_cart", JSON.stringify(existingCart));
-      window.dispatchEvent(new Event("cart-updated"));
+    const existingItemIndex = existingCart.findIndex(
+      (item) => item.productId === productId
+    );
+
+    if (existingItemIndex === -1) {
+      // Add new item
+      existingCart.push({ productId, price_selected });
+    } else {
+      // Update existing item's price
+      existingCart[existingItemIndex].price_selected = price_selected;
     }
+
+    localStorage.setItem("guest_cart", JSON.stringify(existingCart));
+    window.dispatchEvent(new Event("cart-updated"));
   };
 
   return (

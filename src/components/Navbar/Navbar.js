@@ -20,7 +20,7 @@ export default async function Navbar() {
         <div className="text-xl font-bold text-gray-800">Kevin Universe</div>
 
         {/* Navigation */}
-        <div className="hidden md:flex items-center space-x-10 font-semibold text-gray-600 uppercase md:text-sm lg:text-md">
+        <div className="hidden md:flex items-center space-x-10 font-semibold text-gray-600 uppercase md:text-sm lg:text-md mx-5">
           {links.map((item) => (
             <Link
               key={item.name}
@@ -40,7 +40,12 @@ export default async function Navbar() {
               </button>
             </form>
           ) : (
-            <Link href="/login">Login</Link>
+            <Link
+              href="/login"
+              className="relative text-gray-600 hover:text-indigo-600 transition-color duration-300 after:absolute after:left-1/2 after:bottom-0 after:w-0 after:h-[2px] after:bg-indigo-600 after:transform after:-translate-x-1/2 hover:after:w-full after:transition-all after:duration-300"
+            >
+              Login
+            </Link>
           )}
         </div>
         <div className="flex items-center space-x-5">

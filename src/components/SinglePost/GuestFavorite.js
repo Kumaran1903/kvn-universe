@@ -11,12 +11,24 @@ export default function GuestFavorite({ post }) {
       localStorage.getItem("guest_wishlist") || "[]"
     );
 
-    if (!existingWishlist.includes(productId)) {
-      existingWishlist.push(productId);
+    const exists = existingWishlist.find(
+      (item) => item.productId === productId
+    );
+
+    const price_selected =
+      localStorage.getItem("price_selected_" + productId) || "personal";
+
+    if (!exists) {
+      existingWishlist.push({
+        productId: productId,
+        price_selected: price_selected,
+      });
       localStorage.setItem("guest_wishlist", JSON.stringify(existingWishlist));
       setIsFavorite(true);
     } else {
-      const updatedWishlist = existingWishlist.filter((id) => id !== productId);
+      const updatedWishlist = existingWishlist.filter(
+        (item) => item.productId !== productId
+      );
       localStorage.setItem("guest_wishlist", JSON.stringify(updatedWishlist));
       setIsFavorite(false);
     }
@@ -26,7 +38,9 @@ export default function GuestFavorite({ post }) {
     const existingWishlist = JSON.parse(
       localStorage.getItem("guest_wishlist") || "[]"
     );
-    setIsFavorite(existingWishlist.includes(post.id));
+    setIsFavorite(
+      existingWishlist.findIndex((item) => item.productId === post.id) !== -1
+    );
   }, [post.id]);
 
   return (

@@ -60,7 +60,7 @@ export default async function UserWishlist({ userId }) {
                     </h3>
                     <p className="flex items-center text-gray-600 font-bold">
                       <IndianRupee className="w-4 h-4" />
-                      <span>{item.cost}</span>
+                      <span>{item.price}</span>
                     </p>
                   </div>
                   <div className="flex gap-2">

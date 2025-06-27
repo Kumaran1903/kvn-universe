@@ -57,7 +57,7 @@ export default function Contact() {
 
   if (isSubmitted) {
     return (
-      <div className="bg-gradient-to-t from-indigo-300 min-h-screen py-16 flex items-center justify-center">
+      <div className=" bg-gradient-to-t from-indigo-300 min-h-screen py-16 flex items-center justify-center">
         <div className="container mx-auto px-4 max-w-2xl text-center">
           <div className="bg-white rounded-xl shadow-xl p-12">
             <CheckCircle className="w-16 h-16 text-green-500 mx-auto mb-6" />
@@ -65,12 +65,13 @@ export default function Contact() {
               Thank You for Contacting Us!
             </h2>
             <p className="text-gray-600 text-lg mb-8">
-              We've received your message and will get back to you as soon as
-              possible. We appreciate you taking the time to reach out to us.
+              We&apos;ve received your message and will get back to you as soon
+              as possible. We appreciate you taking the time to reach out to us.
             </p>
             <button
               onClick={resetForm}
-              className="bg-indigo-500 text-white px-8 py-3 rounded-md font-semibold hover:bg-indigo-600 transition duration-300"
+              className="bg-indigo-500 text-white px-8 py-3 rounded-md font-semibold hover:bg-indigo-600 transition duration-300 mb-5"
+              style={{ padding: "15px 10px" }}
             >
               Send Another Message
             </button>
@@ -81,7 +82,7 @@ export default function Contact() {
   }
 
   return (
-    <div className="bg-gradient-to-t from-indigo-300 min-h-screen py-16">
+    <div className=" bg-gradient-to-t from-indigo-300 min-h-screen py-16">
       <div
         className="container mx-auto px-4 "
         style={{ paddingBottom: "40px" }}
@@ -92,7 +93,7 @@ export default function Contact() {
 
         {/* Contact Info & Form */}
         <div
-          className="flex flex-col lg:flex-row bg-white/20 backdrop:blur-3xl md:bg-white rounded-xl shadow-xl overflow-hidden space-y-10"
+          className="w-4/5 mx-auto flex flex-col lg:flex-row bg-white/20 backdrop:blur-3xl md:bg-white rounded-xl shadow-xl overflow-hidden space-y-10"
           style={{ padding: "80px 30px" }}
         >
           {/* Left: Contact Info */}
@@ -109,7 +110,7 @@ export default function Contact() {
               <MapPin className="text-indigo-600 mt-1" />
               <div>
                 <p className="font-semibold">Address</p>
-                <p>1234 Movie Lane, Intro City, IM 56789</p>
+                <p>Bangalore -76 Karnataka</p>
               </div>
             </div>
 
@@ -117,15 +118,7 @@ export default function Contact() {
               <Mail className="text-indigo-600 mt-1" />
               <div>
                 <p className="font-semibold">Email</p>
-                <p>prashanthkevin@gmail.com</p>
-              </div>
-            </div>
-
-            <div className="flex items-start space-x-4">
-              <Phone className="text-indigo-600 mt-1" />
-              <div>
-                <p className="font-semibold">Phone</p>
-                <p>+91 98765 43210</p>
+                <p>kevinmj534@gmail.com</p>
               </div>
             </div>
           </div>

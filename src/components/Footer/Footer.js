@@ -12,10 +12,10 @@ export default function Footer() {
         style={{ padding: "30px 0px" }}
       >
         <div className="flex flex-col space-y-4">
-          <div className="text-lg text-gray-800 font-bold">Logo</div>
+          <div className="text-lg text-gray-800 font-bold">Kevin Universe</div>
           <div>Address</div>
-          <div>prashanthkevin@gmail.com</div>
-          <div>+91987654321</div>
+          <div>Bangalore -76 Karnataka</div>
+          <div>kevinmj534@gmail.com</div>
           <div className="sm:flex space-x-3 hidden">
             <Link
               href="https://www.youtube.com/@KVNUNIVERSE"

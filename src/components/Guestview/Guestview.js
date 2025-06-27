@@ -12,9 +12,11 @@ export default function GuestView() {
   };
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 h-[95vh]">
-      <GuestWishlist reloadFlag={reloadFlag} triggerReload={triggerReload} />
-      <GuestCart reloadFlag={reloadFlag} triggerReload={triggerReload} />
+    <div>
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 h-[95vh]">
+        <GuestWishlist reloadFlag={reloadFlag} triggerReload={triggerReload} />
+        <GuestCart reloadFlag={reloadFlag} triggerReload={triggerReload} />
+      </div>
     </div>
   );
 }

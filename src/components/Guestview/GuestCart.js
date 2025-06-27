@@ -22,28 +22,53 @@ export default function GuestCart({ reloadFlag, triggerReload }) {
   }, [reloadFlag]);
 
   const removeFromCart = (productId) => {
-    const updatedCart = cartItems.filter((item) => item.id !== productId);
-    const updatedIds = updatedCart.map((item) => item.id);
-    localStorage.setItem("guest_cart", JSON.stringify(updatedIds));
+    const existingCart = JSON.parse(localStorage.getItem("guest_cart") || "[]");
+    const updatedCart = existingCart.filter(
+      (item) => item.productId !== productId
+    );
+    localStorage.setItem("guest_cart", JSON.stringify(updatedCart));
     window.dispatchEvent(new Event("cart-updated"));
     triggerReload();
   };
 
   const addWishlistDeleteCart = (productId) => {
-    const updatedCart = cartItems.filter((item) => item.id !== productId);
-    const updatedIds = updatedCart.map((item) => item.id);
-    localStorage.setItem("guest_cart", JSON.stringify(updatedIds));
+    // Remove from cart
+    const existingCart = JSON.parse(localStorage.getItem("guest_cart") || "[]");
+    const updatedCart = existingCart.filter(
+      (item) => item.productId !== productId
+    );
+    localStorage.setItem("guest_cart", JSON.stringify(updatedCart));
 
-    const wishlist = JSON.parse(localStorage.getItem("guest_wishlist") || "[]");
-    if (!wishlist.includes(productId)) {
-      wishlist.push(productId);
-      localStorage.setItem("guest_wishlist", JSON.stringify(wishlist));
+    // Add to wishlist
+    const existingWishlist = JSON.parse(
+      localStorage.getItem("guest_wishlist") || "[]"
+    );
+    const existingItemIndex = existingWishlist.findIndex(
+      (item) => item.productId === productId
+    );
+
+    const price_selected =
+      localStorage.getItem("price_selected_" + productId) || "personal";
+
+    if (existingItemIndex === -1) {
+      // Item not in wishlist — add it
+      existingWishlist.push({
+        productId: productId,
+        price_selected: price_selected,
+      });
+    } else {
+      // Item exists — update selected price
+      existingWishlist[existingItemIndex].price_selected = price_selected;
     }
+
+    localStorage.setItem("guest_wishlist", JSON.stringify(existingWishlist));
+
+    // Notify others and refresh
     window.dispatchEvent(new Event("cart-updated"));
     triggerReload();
   };
 
-  const total = cartItems.reduce((sum, item) => sum + item.cost, 0);
+  const total = cartItems.reduce((sum, item) => sum + item.price_selected, 0);
 
   return (
     <div className="min-h-[60vh] bg-gradient-to-br from-slate-100 to-indigo-100 rounded-2xl shadow-xl overflow-hidden border-indigo-200">
@@ -85,7 +110,7 @@ export default function GuestCart({ reloadFlag, triggerReload }) {
                 style={{ padding: "16px" }}
               >
                 <div className="flex gap-3 items-center">
-                  <div className="relative h-20 w-28 rounded-lg overflow-hidden">
+                  <div className="hidden sm:block relative h-20 w-28 rounded-lg overflow-hidden">
                     <Image
                       src={item.image}
                       fill
@@ -94,12 +119,12 @@ export default function GuestCart({ reloadFlag, triggerReload }) {
                     />
                   </div>
                   <div className="flex-1">
-                    <h3 className="font-semibold text-gray-800 group-hover:text-indigo-600 transition-colors">
+                    <div className="text-sm sm:text-md font-semibold text-gray-800 group-hover:text-indigo-600 transition-colors">
                       {item.title}
-                    </h3>
+                    </div>
                     <p className="flex items-center text-gray-600 font-bold">
                       <IndianRupee className="w-4 h-4" />
-                      <span>{item.cost}</span>
+                      <span>{item.price_selected}</span>
                     </p>
                   </div>
                   <div className="flex gap-2">

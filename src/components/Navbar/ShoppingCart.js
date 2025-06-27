@@ -20,7 +20,7 @@ export default function ShoppingCart({ session }) {
       }
     };
 
-    fetchCart();
+    fetchCart();  
     window.addEventListener("cart-updated", fetchCart);
     return () => window.removeEventListener("cart-updated", fetchCart);
   }, [session]); 

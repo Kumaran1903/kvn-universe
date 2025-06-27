@@ -1,39 +1,70 @@
-import { Cart, Wishlist, Post } from "@/lib/models";
+import { Cart, Wishlist, UserPricing } from "@/lib/models";
 import { connectToDB } from "@/lib/utils";
 import { NextResponse } from "next/server";
 
 export async function POST(req) {
   try {
-    const { userId, guestCart = [], guestWishlist = [] } = await req.json();
+    const {
+      userId,
+      guestCart = [],
+      guestWishlist = [],
+      guestPriceSelections = [],
+    } = await req.json();
+
     await connectToDB();
 
     // === SYNC CART ===
     const cart = await Cart.findOne({ userId });
     if (cart) {
-      const mergedCart = [...new Set([...cart.productIds, ...guestCart])];
-      cart.productIds = mergedCart;
-      await cart.save();
+      const existingIds = new Set(cart.productIds);
+      const newItems = guestCart.filter((id) => !existingIds.has(id));
+      if (newItems.length > 0) {
+        cart.productIds.push(...newItems);
+        await cart.save();
+      }
     } else {
       await Cart.create({ userId, productIds: [...new Set(guestCart)] });
     }
 
     // === SYNC WISHLIST ===
     const wishlist = await Wishlist.findOne({ userId });
-    const mergedWishlist = wishlist
-      ? [...new Set([...wishlist.productIds, ...guestWishlist])]
-      : [...new Set(guestWishlist)];
-
     if (wishlist) {
-      wishlist.productIds = mergedWishlist;
-      await wishlist.save();
+      const existingIds = new Set(
+        wishlist.products.map((item) => item.productId)
+      );
+      const newProducts = guestWishlist
+        .filter((id) => !existingIds.has(id))
+        .map((id) => ({ productId: id, favorite: true }));
+      if (newProducts.length > 0) {
+        wishlist.products.push(...newProducts);
+        await wishlist.save();
+      }
     } else {
-      await Wishlist.create({ userId, productIds: mergedWishlist });
+      const products = guestWishlist.map((id) => ({
+        productId: id,
+        favorite: true,
+      }));
+      await Wishlist.create({ userId, products });
     }
 
-    // === UPDATE POSTS (mark as favorite) ===
-    for (const productId of guestWishlist) {
-      await Post.findByIdAndUpdate(productId, {
-        $set: { favorite: true },
+    // === SYNC USER PRICING ===
+    const userPricing = await UserPricing.findOne({ userId });
+    if (userPricing) {
+      const existingPairs = new Set(
+        userPricing.usePrice.map((p) => `${p.productId}_${p.price_selected}`)
+      );
+      const newEntries = guestPriceSelections.filter(
+        ({ productId, price_selected }) =>
+          !existingPairs.has(`${productId}_${price_selected}`)
+      );
+      if (newEntries.length > 0) {
+        userPricing.usePrice.push(...newEntries);
+        await userPricing.save();
+      }
+    } else {
+      await UserPricing.create({
+        userId,
+        usePrice: [...guestPriceSelections],
       });
     }
 

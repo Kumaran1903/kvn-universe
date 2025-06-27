@@ -6,7 +6,6 @@ import { useEffect, useState } from "react";
 
 export default function GuestWishlist({ reloadFlag, triggerReload }) {
   const [wishlistItems, setWishlistItems] = useState([]);
-
   useEffect(() => {
     const fetchWishlist = async () => {
       const items = JSON.parse(localStorage.getItem("guest_wishlist") || "[]");
@@ -21,22 +20,39 @@ export default function GuestWishlist({ reloadFlag, triggerReload }) {
   }, [reloadFlag]);
 
   const removeFromWishList = (productId) => {
-    const updated = wishlistItems.filter((item) => item.id !== productId);
-    const updatedIds = updated.map((item) => item.id);
-    localStorage.setItem("guest_wishlist", JSON.stringify(updatedIds));
+    const existingWishlist = JSON.parse(
+      localStorage.getItem("guest_wishlist") || "[]"
+    );
+    const updatedWishlist = existingWishlist.filter(
+      (item) => item.productId !== productId
+    );
+    localStorage.setItem("guest_wishlist", JSON.stringify(updatedWishlist));
     triggerReload();
   };
 
   const removeFromWishListAddToCart = (productId) => {
-    const updated = wishlistItems.filter((item) => item.id !== productId);
-    const updatedIds = updated.map((item) => item.id);
-    localStorage.setItem("guest_wishlist", JSON.stringify(updatedIds));
+    //removed from wishlist
+    const existingWishlist = JSON.parse(
+      localStorage.getItem("guest_wishlist") || "[]"
+    );
+    const updatedWishlist = existingWishlist.filter(
+      (item) => item.productId !== productId
+    );
+    localStorage.setItem("guest_wishlist", JSON.stringify(updatedWishlist));
+    //add to cart
+    const existingCart = JSON.parse(localStorage.getItem("guest_cart") || "[]");
+    const existingItemIndex = existingCart.findIndex(
+      (item) => item.productId === productId
+    );
+    const price_selected =
+      localStorage.getItem("price_selected_" + productId) || "personal";
 
-    const cart = JSON.parse(localStorage.getItem("guest_cart") || "[]");
-    if (!cart.includes(productId)) {
-      cart.push(productId);
-      localStorage.setItem("guest_cart", JSON.stringify(cart));
+    if (existingItemIndex === -1) {
+      existingCart.push({ productId, price_selected });
+    } else {
+      existingCart[existingItemIndex].price_selected = price_selected;
     }
+    localStorage.setItem("guest_cart", JSON.stringify(existingCart));
     window.dispatchEvent(new Event("cart-updated"));
     triggerReload();
   };
@@ -78,7 +94,7 @@ export default function GuestWishlist({ reloadFlag, triggerReload }) {
                 style={{ padding: "12px" }}
               >
                 <div className="flex items-center gap-4">
-                  <div className="h-20 w-28 relative overflow-hidden">
+                  <div className="hidden sm:block h-20 w-28 relative overflow-hidden">
                     <Image
                       src={item.image}
                       fill
@@ -87,12 +103,12 @@ export default function GuestWishlist({ reloadFlag, triggerReload }) {
                     />
                   </div>
                   <div className="flex-1">
-                    <h3 className="font-semibold text-gray-800 group-hover:text-indigo-600 transition-colors">
+                    <div className="text-sm sm:text-md font-semibold text-gray-800 group-hover:text-indigo-600 transition-colors">
                       {item.title}
-                    </h3>
+                    </div>
                     <p className="flex items-center text-gray-600 font-bold">
                       <IndianRupee className="w-4 h-4" />
-                      <span>{item.cost}</span>
+                      <span>{item.price_selected}</span>
                     </p>
                   </div>
                   <div className="flex gap-2">

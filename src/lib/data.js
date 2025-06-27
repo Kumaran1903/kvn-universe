@@ -1,7 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { Cart, Post, Wishlist } from "./models";
+import { Cart, Post, UserPricing, Wishlist } from "./models";
 import { connectToDB } from "./utils";
 
 export const getPosts = async () => {
@@ -11,9 +11,11 @@ export const getPosts = async () => {
     const refinedPosts = posts.map((post) => ({
       id: post._id.toString(),
       title: post.title,
-      cost: post.cost,
-      favorite: post.favorite,
       image: post.image,
+      price: {
+        personal: post.price.personal,
+        commercial: post.price.commercial,
+      },
     }));
     return refinedPosts;
   } catch (err) {
@@ -43,44 +45,55 @@ export const addToCart = async (formData) => {
 export const getWishListItems = async (userId) => {
   try {
     await connectToDB();
-    const wishlist = await Wishlist.findOne({ userId: userId });
-    const productIds = wishlist ? wishlist.productIds : [];
-    if (productIds.length === 0) return [];
+    const wishlist = await Wishlist.findOne({ userId });
+    const products = wishlist?.products || [];
+    if (products.length === 0) return [];
+
     const posts = await getPosts();
-    const filteredPosts = posts.filter((post) => productIds.includes(post.id));
+    const filteredPosts = [];
+
+    for (const item of posts) {
+      if (products.find((i) => i.productId === item.id)) {
+        const selectedPrice = await getUserSelectedPrice(userId, item.id);
+        filteredPosts.push({
+          id: item.id,
+          title: item.title,
+          image: item.image,
+          price: item.price?.[selectedPrice] || item.price?.personal,
+        });
+      }
+    }
+
     return filteredPosts;
   } catch (err) {
-    console.log("Error fetching Wislists items", err);
+    console.log("Error fetching Wishlist items", err);
+    return [];
   }
 };
 
 export const addOrDeleteWishlist = async (formData) => {
   const { userId, productId } = Object.fromEntries(formData);
-  console.log(userId,"****", productId);
   try {
     await connectToDB();
     const wishlist = await Wishlist.findOne({ userId: userId });
     if (wishlist) {
-      const index = wishlist.productIds.indexOf(productId);
+      const index = wishlist.products.findIndex(
+        (item) => item.productId === productId
+      );
       if (index === -1) {
-        wishlist.productIds.push(productId);
-        await Post.findByIdAndUpdate(
-          { _id: productId },
-          { $set: { favorite: true } }
-        );
+        wishlist.products.push({ productId, favorite: true });
       } else {
-        wishlist.productIds.splice(index, 1);
-        await Post.findByIdAndUpdate(
-          { _id: productId },
-          { $set: { favorite: false } }
-        );
+        wishlist.products.splice(index, 1);
       }
       await wishlist.save();
     } else {
-      await Wishlist.create({ userId: userId, productIds: [productId] });
+      await Wishlist.create({
+        userId: userId,
+        products: [{ productId, favorite: true }],
+      });
     }
-    revalidatePath("/");
     revalidatePath("/store");
+    revalidatePath("/");
     revalidatePath("/cart");
   } catch (err) {
     console.log("Error Adding or Removing WishList item", err);
@@ -92,13 +105,12 @@ export const removeFromWishlist = async (formData) => {
   try {
     await connectToDB();
     const wishlist = await Wishlist.findOne({ userId: userId });
-    const index = wishlist.productIds.indexOf(productId);
-    wishlist.productIds.splice(index, 1);
-    await wishlist.save();
-    await Post.findByIdAndUpdate(
-      { _id: productId },
-      { $set: { favorite: false } }
+    const index = wishlist.products.findIndex(
+      (item) => item.productId === productId
     );
+    wishlist.products.splice(index, 1);
+    await wishlist.save();
+
     revalidatePath("/");
     revalidatePath("/cart");
   } catch (err) {
@@ -112,19 +124,16 @@ export const removeFromWishListAddToCart = async (formData) => {
     await connectToDB();
     //remove from wishlist
     const wishlist = await Wishlist.findOne({ userId: userId });
-    const index = wishlist.productIds.indexOf(productId);
-    wishlist.productIds.splice(index, 1);
+    const index = wishlist.products.findIndex(
+      (item) => item.productId === productId
+    );
+    wishlist.products.splice(index, 1);
     await wishlist.save();
     //add to cart
     const cart = await Cart.findOne({ userId: userId });
     if (cart) {
       if (!cart.productIds.includes(productId)) {
         cart.productIds.push(productId);
-        // update post favorite status
-        await Post.findByIdAndUpdate(
-          { _id: productId },
-          { $set: { favorite: false } }
-        );
       }
       await cart.save();
     } else {
@@ -137,20 +146,45 @@ export const removeFromWishListAddToCart = async (formData) => {
   }
 };
 
-export const getCartItems = async (userId) => {
+export const getFavorite = async (userId, productId) => {
   try {
-    await connectToDB();
-    const cart = await Cart.findOne({ userId: userId });
-    const productIds = cart ? cart.productIds : [];
-    if (productIds.length === 0) return [];
-    const posts = await getPosts();
-    const filteredPosts = posts.filter((post) => productIds.includes(post.id));
-    return filteredPosts;
+    const wishlist = await Wishlist.findOne({ userId });
+    const favorites = wishlist?.products || [];
+    return favorites.some((item) => item.productId === productId);
   } catch (err) {
-    console.log("Error fetching Cart items", err);
+    console.log("Error fetching Favorites", err);
+    return false;
   }
 };
 
+export const getCartItems = async (userId) => {
+  try {
+    await connectToDB();
+    const cart = await Cart.findOne({ userId });
+    const productIds = cart?.productIds || [];
+    if (productIds.length === 0) return [];
+
+    const posts = await getPosts();
+    const filteredPosts = [];
+
+    for (const item of posts) {
+      if (productIds.includes(item.id)) {
+        const selectedPrice = await getUserSelectedPrice(userId, item.id);
+        filteredPosts.push({
+          id: item.id,
+          title: item.title,
+          image: item.image,
+          price: item.price?.[selectedPrice] || item.price?.personal,
+        });
+      }
+    }
+
+    return filteredPosts;
+  } catch (err) {
+    console.error("Error fetching Cart items", err);
+    return [];
+  }
+};
 export const removeFromCart = async (formData) => {
   const { userId, productId } = Object.fromEntries(formData);
   try {
@@ -176,23 +210,72 @@ export const addWishlistDeleteCart = async (formData) => {
     cart.productIds.splice(index, 1);
     await cart.save();
     //add to wishlist
-    const wishlist = await Wishlist.findOne({ userId: userId });
+     const wishlist = await Wishlist.findOne({ userId: userId });
     if (wishlist) {
-      if (!wishlist.productIds.includes(productId)) {
-        wishlist.productIds.push(productId);
-        // update post favorite status
-        await Post.findByIdAndUpdate(
-          { _id: productId },
-          { $set: { favorite: true } }
-        );
-      }
+      const index = wishlist.products.findIndex(
+        (item) => item.productId === productId
+      );
+      if (index === -1) {
+        wishlist.products.push({ productId, favorite: true });
+      } 
       await wishlist.save();
     } else {
-      await Wishlist.create({ userId: userId, productIds: [productId] });
+      await Wishlist.create({
+        userId: userId,
+        products: [{ productId, favorite: true }],
+      });
     }
+
     revalidatePath("/");
     revalidatePath("/cart");
   } catch (err) {
     console.log("Error Moving item to WishList", err);
+  }
+};
+
+export const updatePrice = async (userId, productId, price_selected) => {
+  console.log(userId, productId, price_selected);
+  try {
+    await connectToDB();
+
+    const userprice = await UserPricing.findOne({ userId });
+
+    if (!userprice) {
+      await UserPricing.create({
+        userId,
+        usePrice: [
+          {
+            productId: productId,
+            price_selected: price_selected,
+          },
+        ],
+      });
+    } else {
+      const productIndex = userprice.usePrice.findIndex(
+        (item) => item.productId === productId
+      );
+
+      if (productIndex !== -1) {
+        userprice.usePrice[productIndex].price_selected = price_selected;
+      } else {
+        userprice.usePrice.push({ productId: productId, price_selected });
+      }
+
+      await userprice.save();
+    }
+  } catch (err) {
+    console.log("Error Updating Price", err);
+  }
+};
+
+export const getUserSelectedPrice = async (userId, productId) => {
+  try {
+    const userPriceDoc = await UserPricing.findOne({ userId });
+    if (!userPriceDoc) return null;
+    const item = userPriceDoc.usePrice.find((p) => p.productId === productId);
+    return item?.price_selected || null;
+  } catch (err) {
+    console.error("Error fetching selected price", err);
+    return null;
   }
 };

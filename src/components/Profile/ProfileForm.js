@@ -2,7 +2,10 @@
 import React from "react";
 
 export default function ProfileForm({ profile, setProfile }) {
-  const isProfileComplete = profile.name && profile.email && profile.phone;
+  const isProfileComplete =
+    profile.name?.trim() &&
+    profile.email?.trim() &&
+    profile.phone?.toString().trim().length >= 10;
 
   return (
     <div

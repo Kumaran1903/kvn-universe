@@ -1,7 +1,8 @@
-import { addOrDeleteWishlist } from "@/lib/data";
+import { addOrDeleteWishlist, getFavorite } from "@/lib/data";
 import { Heart } from "lucide-react";
 
-export default function UserFavorite({ post, userId }) {
+export default async function UserFavorite({ post, userId }) {
+  const favorite = await getFavorite(userId, post.id);
   return (
     <form action={addOrDeleteWishlist}>
       <input type="hidden" value={post.id} name="productId" />
@@ -13,7 +14,7 @@ export default function UserFavorite({ post, userId }) {
       >
         <Heart
           className={`w-6 h-6 ${
-            post.favorite
+            favorite
               ? "fill-indigo-400 stroke-indigo-400"
               : "fill-none stroke-gray-500"
           } transition-all duration-300 cursor-pointer`}
