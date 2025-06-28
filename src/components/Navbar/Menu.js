@@ -53,6 +53,14 @@ export default function Menu({ session }) {
               {item.name}
             </Link>
           ))}
+          {session?.user?.isAdmin && (
+            <Link
+              href="/admin"
+              className="relative text-gray-600 hover:text-indigo-600 transition-color duration-300 after:absolute after:left-1/2 after:bottom-0 after:w-0 after:h-[2px] after:bg-indigo-600 after:transform after:-translate-x-1/2 hover:after:w-full after:transition-all after:duration-300"
+            >
+              Admin
+            </Link>
+          )}
           {session?.user ? (
             // <form action={handleLogout}>
             <button

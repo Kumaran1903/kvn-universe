@@ -17,24 +17,26 @@ export default function DeliveryPolicy() {
           1. Delivery Method
         </h2>
         <p>
-          Final edited videos or other services are delivered via email or
-          downloadable link shared with the client.
+          All edited videos or digital services will be delivered via email or a
+          secure download link sent to your registered email address.
         </p>
 
         <h2 className="text-xl font-semibold text-indigo-600 mt-6 mb-2">
           2. Delivery Timeline
         </h2>
         <p>
-          Orders are typically fulfilled within 3–5 working days after full
-          payment. Complex projects may take longer.
+          We strive to deliver the final output within <strong>8 hours</strong>{" "}
+          of successful payment and submission of required materials. In case of
+          technical issues, unexpected delays, or complex requirements, delivery
+          may take up to <strong>2–3 business days</strong>.
         </p>
 
         <h2 className="text-xl font-semibold text-indigo-600 mt-6 mb-2">
           3. Contact
         </h2>
         <p>
-          Contact <strong>delivery@kevinmj534@gmail.com</strong> for
-          delivery-related help.
+          If you face delays or have questions about delivery, contact us at{" "}
+          <strong>delivery@kevinmj534@gmail.com</strong>.
           <br />
         </p>
       </div>

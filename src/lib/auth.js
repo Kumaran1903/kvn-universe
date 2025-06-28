@@ -14,7 +14,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     }),
   ],
   session: {
-    strategy: "jwt", 
+    strategy: "jwt",
   },
   callbacks: {
     async jwt({ token, user }) {
@@ -30,8 +30,10 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             isAdmin: false,
           });
           token.id = newUser._id;
+          token.isAdmin = newUser.isAdmin;
         } else {
           token.id = existingUser._id;
+          token.isAdmin = existingUser.isAdmin;
         }
       }
       return token;
@@ -39,6 +41,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     async session({ session, token }) {
       if (token?.id) {
         session.user.userId = token.id;
+        session.user.isAdmin = token.isAdmin;
       }
       return session;
     },

@@ -106,26 +106,28 @@ export default function PaymentForm({
           />
         </div>
       ) : (
-        <div
-          className="border-2 border-blue-500 bg-blue-50 rounded-xl"
-          style={{ padding: "16px", marginBottom: "32px" }}
-        >
-          <div className="flex flex-col items-center">
-            <Image
-              src="/qr.png"
-              alt="QR Code"
-              height={150}
-              width={250}
-              className="object-contain"
-            />
-            <p
-              className="text-sm font-medium text-gray-700"
-              style={{ marginTop: "8px" }}
-            >
-              Scan to Pay ₹{totalAmount}
-            </p>
+        isProfileComplete && (
+          <div
+            className="border-2 border-blue-500 bg-blue-50 rounded-xl"
+            style={{ padding: "16px", marginBottom: "32px" }}
+          >
+            <div className="flex flex-col items-center">
+              <Image
+                src="/qr.png"
+                alt="QR Code"
+                height={150}
+                width={250}
+                className="object-contain"
+              />
+              <p
+                className="text-sm font-medium text-gray-700"
+                style={{ marginTop: "8px" }}
+              >
+                Scan to Pay ₹{totalAmount}
+              </p>
+            </div>
           </div>
-        </div>
+        )
       )}
 
       {deviceType === "mobile" && (

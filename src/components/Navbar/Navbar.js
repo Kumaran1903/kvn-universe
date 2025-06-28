@@ -13,6 +13,7 @@ export default async function Navbar() {
     { name: "Contact", url: "/contact" },
   ];
   const session = await auth();
+  console.log("session", session);
   return (
     <div className="fixed top-0 left-0 w-full bg-white/90 backdrop:blur-lg z-25">
       <div className="relative container mx-auto w-4/5 h-20 flex items-center justify-between">
@@ -30,6 +31,14 @@ export default async function Navbar() {
               {item.name}
             </Link>
           ))}
+          {session?.user?.isAdmin && (
+            <Link
+              href="/admin"
+              className="relative text-gray-600 hover:text-indigo-600 transition-color duration-300 after:absolute after:left-1/2 after:bottom-0 after:w-0 after:h-[2px] after:bg-indigo-600 after:transform after:-translate-x-1/2 hover:after:w-full after:transition-all after:duration-300"
+            >
+              Admin
+            </Link>
+          )}
           {session?.user ? (
             <form action={handleLogout}>
               <button

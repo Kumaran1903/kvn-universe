@@ -10,3 +10,4 @@ export const handleLogin = async () => {
 export const handleLogout = async () => {
   await signOut();
 };
+
