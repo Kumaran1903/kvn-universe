@@ -1,5 +1,3 @@
-"use client"; // Only if you're using app directory
-
 import Image from "next/image";
 import Link from "next/link";
 import "./globals.css"; // Make sure this is imported
@@ -24,7 +22,7 @@ export default function Home() {
               UNLEASH YOUR CREATIVITY WITH KEVIN UNIVERSE
             </span>
             <span className="text-white text-lg">
-              It's Time to Start Something New and Trust The Magic Of New
+              It&apos;s Time to Start Something New and Trust The Magic Of New
               Beginnings.
             </span>
             <span className="text-white/80">
@@ -128,7 +126,7 @@ export default function Home() {
             </div>
           </div>
           <p className="text-white/80 text-md text-center mt-4">
-            Crafted on cutting-edge DigitalOcean servers, our intros represent a
+            Crafted on cutting-edge Digital Ocean servers, our intros represent a
             fusion of innovation and deliver unmatched quality.
           </p>
         </div>
@@ -151,7 +149,7 @@ export default function Home() {
           </h2>
           <p className="text-white/80">
             A hub of unique intros and openings for studios, movies, and shows,
-            crafted with expertise in After Effects, Blender, Cinema 4D, and
+            crafted with expertise in After Effects, Premiere Pro,Photoshop, Cinema 4D, and
             Element 3D. Discover our diverse and dynamic collection for your
             next video.
           </p>

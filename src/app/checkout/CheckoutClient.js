@@ -73,6 +73,7 @@ export default function CheckoutClient({ session, totalAmount }) {
         upiId={upiId}
         setUpiId={setUpiId}
         totalAmount={totalAmount}
+        userId={session?.user?.userId}
       />
     </div>
   );
