@@ -27,6 +27,11 @@ export default function PaymentForm({
 
   const handleFileUpload = async (file) => {
     if (file && file.type.startsWith("image/")) {
+      if (file.size > 5 * 1024 * 1024) {
+        alert("Image too large. Max allowed size is 5MB.");
+        return;
+      }
+
       setUploadedFile(file);
       setIsOrderPlaced(true);
 
@@ -294,27 +299,82 @@ export default function PaymentForm({
       )}
 
       {deviceType === "mobile" && (
-        <button
-          onClick={() => {
-            if (!isProfileComplete)
-              return alert("Please fill required profile fields.");
-            if (!upiId) return alert("Enter UPI ID");
+        <>
+          <button
+            onClick={() => {
+              if (!isProfileComplete)
+                return alert("Please fill required profile fields.");
+              if (!upiId) return alert("Enter UPI ID");
 
-            const note = "Payment for Order";
-            const upiLink = `upi://pay?pa=9916687534@ptaxis&pn=${profile.name}&am=${totalAmount}&tn=${note}&cu=INR`;
+              const note = "Payment for Order";
+              const upiLink = `upi://pay?pa=9916687534@ptaxis&pn=${profile.name}&am=${totalAmount}&tn=${note}&cu=INR`;
 
-            window.open(upiLink, "_blank");
-          }}
-          disabled={!isProfileComplete}
-          className={`w-full font-bold text-lg rounded-2xl transition-all transform hover:scale-105 ${
-            isProfileComplete
-              ? "bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white shadow-lg"
-              : "bg-gray-300 text-gray-500 cursor-not-allowed"
-          }`}
-          style={{ padding: "18px", marginTop: "24px" }}
-        >
-          Pay ₹{totalAmount}
-        </button>
+              setIsOrderPlaced(true); // disable button + show upload section
+              window.open(upiLink, "_blank");
+            }}
+            disabled={!isProfileComplete || isOrderPlaced}
+            className={`w-full font-bold text-lg rounded-2xl transition-all transform hover:scale-105 ${
+              isProfileComplete
+                ? "bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white shadow-lg"
+                : "bg-gray-300 text-gray-500 cursor-not-allowed"
+            }`}
+            style={{ padding: "18px", marginTop: "24px" }}
+          >
+            {isOrderPlaced
+              ? "Waiting for Screenshot..."
+              : `Pay ₹${totalAmount}`}
+          </button>
+
+          {isOrderPlaced && (
+            <div
+              className="border-2 border-dashed border-gray-300 rounded-xl bg-gray-50 hover:bg-gray-100 transition-colors"
+              style={{ padding: "24px", marginTop: "24px" }}
+              onDrop={handleDrop}
+              onDragOver={handleDragOver}
+              onDragLeave={handleDragLeave}
+            >
+              <div className="flex flex-col items-center text-center">
+                <svg
+                  className="w-12 h-12 mb-4 text-gray-400"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
+                  />
+                </svg>
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                  Upload Payment Screenshot
+                </h3>
+                <p className="text-gray-600 mb-4">
+                  Drag and drop your payment screenshot here, or click to browse
+                </p>
+                <label
+                  className="bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg cursor-pointer transition-colors"
+                  style={{ padding: "12px 24px" }}
+                >
+                  Choose File
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleFileChange}
+                    className="hidden"
+                  />
+                </label>
+                <p
+                  className="text-xs text-gray-500"
+                  style={{ marginTop: "8px" }}
+                >
+                  PNG, JPG, JPEG up to 5MB
+                </p>
+              </div>
+            </div>
+          )}
+        </>
       )}
 
       <div className="text-center" style={{ marginTop: "20px" }}>
