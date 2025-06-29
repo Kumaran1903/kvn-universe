@@ -42,7 +42,10 @@ export default function Menu({ session }) {
         />
       </div>
       {isOpen && (
-        <div className="fixed inset-0 h-[55vh] z-20 md:hidden bg-white/80 backdrop-blur-lg flex flex-col items-center justify-center space-y-10 font-semibold text-gray-800 uppercase md:text-sm lg:text-md">
+        <div
+          className="fixed  inset-0 h-[60vh] z-20 md:hidden bg-white/80 backdrop-blur-lg flex flex-col items-center justify-center space-y-9 font-semibold text-gray-800 uppercase md:text-sm lg:text-md"
+          style={{ padding: "10px 0" }}
+        >
           {links.map((item) => (
             <Link
               key={item.name}
@@ -56,7 +59,7 @@ export default function Menu({ session }) {
           {session?.user?.isAdmin && (
             <Link
               href="/admin"
-              className="relative text-gray-600 hover:text-indigo-600 transition-color duration-300 after:absolute after:left-1/2 after:bottom-0 after:w-0 after:h-[2px] after:bg-indigo-600 after:transform after:-translate-x-1/2 hover:after:w-full after:transition-all after:duration-300"
+              className="relative text-gray-900 hover:text-indigo-600 transition-color duration-300 after:absolute after:left-1/2 after:bottom-0 after:w-0 after:h-[2px] after:bg-indigo-600 after:transform after:-translate-x-1/2 hover:after:w-full after:transition-all after:duration-300"
             >
               Admin
             </Link>
@@ -66,7 +69,7 @@ export default function Menu({ session }) {
             <button
               onClick={handleClick}
               type="submit"
-              className="relative cursor-pointer uppercase text-gray-600"
+              className="relative cursor-pointer uppercase text-gray-900"
             >
               Logout
             </button>

@@ -111,7 +111,7 @@ export default function Contact() {
               <MapPin className="text-indigo-600 mt-1" />
               <div>
                 <p className="font-semibold">Address</p>
-                <p>Bangalore -76 Karnataka</p>
+                <p>Bangalore, Karnataka</p>
               </div>
             </div>
 

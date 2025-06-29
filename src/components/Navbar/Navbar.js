@@ -3,6 +3,7 @@ import Menu from "./Menu";
 import ShoppingCart from "./ShoppingCart";
 import { auth } from "@/lib/auth";
 import { handleLogout } from "@/lib/action";
+import Image from "next/image";
 
 export default async function Navbar() {
   const links = [
@@ -13,12 +14,10 @@ export default async function Navbar() {
     { name: "Contact", url: "/contact" },
   ];
   const session = await auth();
-  console.log("session", session);
   return (
-    <div className="fixed top-0 left-0 w-full bg-white/90 backdrop:blur-lg z-25">
+    <div className="fixed top-0 left-0 w-full z-25 bg-white/90 backdrop:blur-xl">
       <div className="relative container mx-auto w-4/5 h-20 flex items-center justify-between">
-        {/* Logo */}
-        <div className="text-xl font-bold text-gray-800">Kevin Universe</div>
+        <Image src="/logo.png" height={200} width={200} alt="logo" />
 
         {/* Navigation */}
         <div className="hidden md:flex items-center space-x-10 font-semibold text-gray-600 uppercase md:text-sm lg:text-md mx-5">
@@ -26,7 +25,7 @@ export default async function Navbar() {
             <Link
               key={item.name}
               href={item.url}
-              className="relative text-gray-600 hover:text-indigo-600 transition-color duration-300 after:absolute after:left-1/2 after:bottom-0 after:w-0 after:h-[2px] after:bg-indigo-600 after:transform after:-translate-x-1/2 hover:after:w-full after:transition-all after:duration-300"
+              className="relative text-gray-900 hover:textindigo-600 transition-color duration-300 after:absolute after:left-1/2 after:bottom-0 after:w-0 after:h-[2px] after:bg-indigo-600 after:transform after:-translate-x-1/2 hover:after:w-full after:transition-all after:duration-300"
             >
               {item.name}
             </Link>
@@ -34,7 +33,7 @@ export default async function Navbar() {
           {session?.user?.isAdmin && (
             <Link
               href="/admin"
-              className="relative text-gray-600 hover:text-indigo-600 transition-color duration-300 after:absolute after:left-1/2 after:bottom-0 after:w-0 after:h-[2px] after:bg-indigo-600 after:transform after:-translate-x-1/2 hover:after:w-full after:transition-all after:duration-300"
+              className="relative text-gray-900 hover:text-indigo-600 transition-color duration-300 after:absolute after:left-1/2 after:bottom-0 after:w-0 after:h-[2px] after:bg-indigo-600 after:transform after:-translate-x-1/2 hover:after:w-full after:transition-all after:duration-300"
             >
               Admin
             </Link>
@@ -43,7 +42,7 @@ export default async function Navbar() {
             <form action={handleLogout}>
               <button
                 type="submit"
-                className="relative cursor-pointer uppercase text-gray-600 hover:text-indigo-600 transition-color duration-300 after:absolute after:left-1/2 after:bottom-0 after:w-0 after:h-[2px] after:bg-indigo-600 after:transform after:-translate-x-1/2 hover:after:w-full after:transition-all after:duration-300"
+                className="relative cursor-pointer uppercase text-gray-900 hover:text-indigo-600 transition-color duration-300 after:absolute after:left-1/2 after:bottom-0 after:w-0 after:h-[2px] after:bg-indigo-600 after:transform after:-translate-x-1/2 hover:after:w-full after:transition-all after:duration-300"
               >
                 Logout
               </button>
@@ -51,7 +50,7 @@ export default async function Navbar() {
           ) : (
             <Link
               href="/login"
-              className="relative text-gray-600 hover:text-indigo-600 transition-color duration-300 after:absolute after:left-1/2 after:bottom-0 after:w-0 after:h-[2px] after:bg-indigo-600 after:transform after:-translate-x-1/2 hover:after:w-full after:transition-all after:duration-300"
+              className="relative text-gray-900 hover:text-indigo-600 transition-color duration-300 after:absolute after:left-1/2 after:bottom-0 after:w-0 after:h-[2px] after:bg-indigo-600 after:transform after:-translate-x-1/2 hover:after:w-full after:transition-all after:duration-300"
             >
               Login
             </Link>

@@ -14,7 +14,7 @@ export default function Footer() {
         <div className="flex flex-col space-y-4">
           <div className="text-lg text-gray-800 font-bold">Kevin Universe</div>
           <div>Address</div>
-          <div>Bangalore -76 Karnataka</div>
+          <div>Bangalore, Karnataka</div>
           <div>kevinmj534@gmail.com</div>
           <div className="sm:flex space-x-3 hidden">
             <Link
@@ -32,7 +32,7 @@ export default function Footer() {
             </Link>
 
             <Link
-              href="/"
+              href="#"
               // target="_blank"
               className="h-8 w-8 ring-2 flex items-center justify-center rounded-full overflow-hidden cursor-pointer  bg-gray-600 hover:ring-violet-400 hover:bg-violet-400"
             >

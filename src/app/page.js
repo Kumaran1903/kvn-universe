@@ -1,47 +1,47 @@
+"use client"; // Only if you're using app directory
+
 import Image from "next/image";
 import Link from "next/link";
+import "./globals.css"; // Make sure this is imported
 
 export default function Home() {
   return (
-    <div className="">
-      <div className="h-[50vh] lg:h-[90vh] w-full ">
-        <div className="container mx-auto w-4/5 h-full flex items-center mt-10 lg:mt-0">
-          {/* Left Section */}
-          <div className="w-3.2/7 h-full flex flex-col justify-center space-y-3 ">
-            <span className="font-bold text-lg lg:text-xl">
-              Welcome to Kevin Universe
-            </span>
-            <span className="font-bold text-4xl lg:text-5xl">Get Yourself</span>
-            <span
-              className="font-bold text-3xl lg:text-5xl bg-black text-white block w-fit rounded-lg"
-              style={{ padding: "15px" }}
-            >
-              Stunning Intros
-            </span>
-            <span className="text-sm xl:text-md font-semibold  text-gray-700">
-              Personalized intros in the style of your most-loved movies and
-              shows.
-            </span>
-            <span className="text-sm xl:text-md font-semibold text-gray-700">
-              Perfect for your social media, special events, or just for fun.
-            </span>
-          </div>
+    <div>
+      {/* Background Video */}
+      <video autoPlay loop muted playsInline className="background-video">
+        <source src="/background.mp4" type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
 
-          {/* Right Section */}
-          <div className="w-4/7 h-full relative hidden md:block">
-            <Image
-              src="/temp.png"
-              fill
-              alt="temp"
-              sizes="100%"
-              className="object-contain"
-            />
+      {/* Dark Overlay */}
+      <div className="fixed top-0 left-0 w-full h-full " />
+
+      {/* Hero Section */}
+      <div className="h-[50vh] lg:h-[90vh] w-full">
+        <div className="container mx-auto w-4/5 h-full flex items-center mt-10 lg:mt-0">
+          <div className="flex flex-col items-center justify-center w-full space-y-3 text-center">
+            <span className="font-bold text-white text-lg lg:text-4xl">
+              UNLEASH YOUR CREATIVITY WITH KEVIN UNIVERSE
+            </span>
+            <span className="text-white text-lg">
+              It's Time to Start Something New and Trust The Magic Of New
+              Beginnings.
+            </span>
+            <span className="text-white/80">
+              Personalized intros and title sequences in the style of your
+              most-loved movies and shows
+            </span>
+            <span className="text-white/70">
+              Perfect for your social media, special events, short films, or
+              just for fun.
+            </span>
           </div>
         </div>
       </div>
+
       {/* Social Media Scrolling Section */}
-      <div className=" mx-auto  w-full " style={{ padding: "20px" }}>
-        <div className="container mx-auto w-3/4 overflow-hidden  ">
+      <div className="mx-auto w-full py-5">
+        <div className="container mx-auto w-3/4 overflow-hidden">
           <div className="scroll-wrapper">
             <div className="scroll-content">
               {[...Array(2)].map((_, i) => (
@@ -70,16 +70,17 @@ export default function Home() {
           </div>
         </div>
       </div>
-      {/* Popular Opening Intro Section  */}
-      <div className="w-full " style={{ padding: "75px 0px" }}>
+
+      {/* Popular Opening Intro Section */}
+      <div className="w-full my-20">
         <div className="container mx-auto w-6/7 h-auto">
-          <h3 className="text-center  text-2xl md:text-4xl font-bold mb-20">
+          <h3 className="text-center text-white text-2xl md:text-4xl font-bold mb-20">
             Popular Opening Intros
           </h3>
 
           <div className="flex flex-col md:flex-row flex-wrap items-center justify-center space-y-16 md:space-y-0 md:space-x-16">
             {/* Card 1 */}
-            <div className="flex flex-col justify-center items-center space-y-2 mb-20  ">
+            <div className="flex flex-col justify-center items-center space-y-2 mb-20">
               <div className="relative h-40 w-72 md:h-56 md:w-96 mb-5 group">
                 <Image
                   src="/intro1.png"
@@ -89,14 +90,13 @@ export default function Home() {
                   className="object-contain rounded-md transition-transform duration-500 ease-in-out group-hover:scale-110"
                 />
               </div>
-              <span className="text-lg text-gray-600">Marvel Studios</span>
-              <span className="text-xl md:text-2xl font-bold text-gray-800">
-                Craft Your Signature Intro
+              <span className="text-xl md:text-2xl font-semibold text-white">
+                Kalki 2898 AD
               </span>
             </div>
 
             {/* Card 2 */}
-            <div className="flex flex-col justify-center items-center space-y-2 mb-10">
+            <div className="flex flex-col justify-center items-center space-y-2 mb-20">
               <div className="relative h-40 w-72 md:h-56 md:w-96 mb-5 group">
                 <Image
                   src="/intro2.png"
@@ -106,9 +106,8 @@ export default function Home() {
                   className="object-contain rounded-md transition-transform duration-500 ease-in-out group-hover:scale-110"
                 />
               </div>
-              <span className="text-lg text-gray-600">Netflix</span>
-              <span className="text-xl md:text-2xl font-bold text-gray-800">
-                Sleek & Modern Design
+              <span className="text-xl md:text-2xl font-semibold text-white">
+                Rise Roar Revolt
               </span>
             </div>
 
@@ -123,42 +122,40 @@ export default function Home() {
                   className="object-contain rounded-md transition-transform duration-500 ease-in-out group-hover:scale-110"
                 />
               </div>
-              <span className="text-lg text-gray-600">
-                Guardians of the Galaxy
-              </span>
-              <span className="text-xl md:text-2xl font-bold text-gray-800">
-                Launch with a Bang
+              <span className="text-xl md:text-2xl font-semibold text-white">
+                Good Bad Ugly
               </span>
             </div>
           </div>
-          <p className="text-gray-600 text-md text-center">
+          <p className="text-white/80 text-md text-center mt-4">
             Crafted on cutting-edge DigitalOcean servers, our intros represent a
             fusion of innovation and deliver unmatched quality.
           </p>
         </div>
       </div>
-      {/*  */}
-      <div className="w-full  h-[75vh] flex flex-col md:flex-row items-center justify-center  shadow-[0_-10px_20px_rgba(99,102,241,0.15),0_10px_20px_rgba(99,102,241,0.15)]">
+
+      {/* CTA Section */}
+      <div className="w-full h-[75vh] flex flex-col md:flex-row items-center justify-center ">
         <div className="relative h-full w-full md:w-1/2 m-1">
           <Image
-            src="/pentagon.png"
+            src="/polygon-collage.png"
             fill
-            alt="/"
+            alt="collage"
             sizes="100%"
             className="object-contain"
           />
         </div>
-        <div className=" w-3/4 md:w-1/2  md:mx-10 flex flex-col space-y-3 items-start sm:items-center md:items-start ">
-          <h2 className=" text-xl md:text-2xl  font-bold">
+        <div className="w-3/4 md:w-1/2 md:mx-10 flex flex-col space-y-3 items-start sm:items-center md:items-start">
+          <h2 className="text-xl md:text-2xl font-bold text-white">
             Check Out our Complete Intro Catalogue!
           </h2>
-          <p className="text-gray-600 ">
+          <p className="text-white/80">
             A hub of unique intros and openings for studios, movies, and shows,
             crafted with expertise in After Effects, Blender, Cinema 4D, and
             Element 3D. Discover our diverse and dynamic collection for your
             next video.
           </p>
-          <div className="group">
+          <div className=" z-5">
             <Link
               href="https://www.youtube.com/@KVNUNIVERSE"
               target="_blank"
