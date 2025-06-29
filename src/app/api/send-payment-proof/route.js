@@ -12,6 +12,7 @@ export async function POST(req) {
     const name = formData.get("name");
     const email = formData.get("email");
     const phone = formData.get("phone");
+    const TotalAmount = formData.get("TotalAmount");
     const userId = formData.get("userId");
 
     const buffer = Buffer.from(await file.arrayBuffer());
@@ -27,10 +28,10 @@ export async function POST(req) {
       to: [process.env.EMAIL_RECEIVER],
       subject: `New Payment Screenshot from ${name}`,
       html: `
-        <p><strong>Name:</strong> ${name}</p>
-        <p><strong>Email:</strong> ${email}</p>
-        <p><strong>Phone:</strong> ${phone}</p>
-        <p><strong>User ID:</strong> ${userId}</p>
+        <p><strong>Name : </strong> ${name}</p>
+        <p><strong>Email : </strong> ${email}</p>
+        <p><strong>Phone : </strong> ${phone}</p>
+        <p><strong>Total Amount to be paid : </strong> ${TotalAmount}</p>
       `,
       attachments: [
         {
