@@ -29,26 +29,24 @@ export async function POST(req) {
 
     const buffer = Buffer.from(await file.arrayBuffer());
     const base64Content = buffer.toString("base64");
+    const products = purchasedItems.map((item) => item.title);
     // Prepare form data to send to Kevin's verifier API
     const verifyFormData = new FormData();
     verifyFormData.append("name", name);
     verifyFormData.append("email", email);
     verifyFormData.append("amount", TotalAmount);
-    verifyFormData.append("products", JSON.stringify(purchasedItems));
+    verifyFormData.append("products", JSON.stringify(products));
     verifyFormData.append(
-      "file",
+      "screenshot",
       new Blob([buffer], { type: file.type }),
       file.name
     );
 
     // Send to verification API
-    const verifyResponse = await fetch(
-      "https://kevin-payment-verifier.onrender.com/api/verify",
-      {
-        method: "POST",
-        body: verifyFormData,
-      }
-    );
+    fetch("https://kevin-payment-verifier.onrender.com/api/verify", {
+      method: "POST",
+      body: verifyFormData,
+    });
 
     await connectToDB();
     await Cart.findOneAndDelete({ userId });
