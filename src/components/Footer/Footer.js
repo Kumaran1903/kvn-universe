@@ -57,6 +57,19 @@ export default function Footer() {
                 className=" object-contain"
               />
             </Link>
+            <Link
+              href="https://t.me/kevinuniverse534"
+              target="_blank"
+              className="h-8 w-8 ring-2 flex items-center justify-center rounded-full overflow-hidden cursor-pointer  bg-gray-600 hover:ring-violet-400 hover:bg-violet-400"
+            >
+              <Image
+                src="/telegram.png"
+                height={25}
+                width={25}
+                alt="telegram"
+                className=" object-contain"
+              />
+            </Link>
           </div>
           <span className="text-md font-semibold mt-3">
             Copyright &copy; 2025

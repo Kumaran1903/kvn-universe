@@ -8,21 +8,21 @@ export default async function middleware(request) {
     secureCookie: process.env.NODE_ENV === "production",
   });
 
-  // const isOnAdminPage = request.nextUrl.pathname.startsWith("/admin");
-  // const isOnLoginPage = request.nextUrl.pathname.startsWith("/login");
-  // const isOnCheckoutPage = request.nextUrl.pathname.startsWith("/checkout");
+  const isOnAdminPage = request.nextUrl.pathname.startsWith("/admin");
+  const isOnLoginPage = request.nextUrl.pathname.startsWith("/login");
+  const isOnCheckoutPage = request.nextUrl.pathname.startsWith("/checkout");
 
-  // if ((!token || !token.isAdmin) && isOnAdminPage) {
-  //   return NextResponse.redirect(new URL("/", request.url));
-  // }
+  if ((!token || !token.isAdmin) && isOnAdminPage) {
+    return NextResponse.redirect(new URL("/", request.url));
+  }
 
-  // if (!token && isOnCheckoutPage) {
-  //   return NextResponse.redirect(new URL("/login", request.url));
-  // }
+  if (!token && isOnCheckoutPage) {
+    return NextResponse.redirect(new URL("/login", request.url));
+  }
 
-  // if (token && isOnLoginPage) {
-  //   return NextResponse.redirect(new URL("/", request.url));
-  // }
+  if (token && isOnLoginPage) {
+    return NextResponse.redirect(new URL("/", request.url));
+  }
 
   return NextResponse.next();
 }

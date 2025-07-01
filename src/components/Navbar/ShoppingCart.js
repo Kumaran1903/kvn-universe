@@ -2,11 +2,12 @@
 import { getCartItems } from "@/lib/data";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function ShoppingCart({ session }) {
   const [cartItemCount, setCartItemCount] = useState(0);
-
+  const pathname = usePathname();
   useEffect(() => {
     const fetchCart = async () => {
       if (session?.user) {
@@ -23,7 +24,7 @@ export default function ShoppingCart({ session }) {
     fetchCart();
     window.addEventListener("cart-updated", fetchCart);
     return () => window.removeEventListener("cart-updated", fetchCart);
-  }, [session]);
+  }, [session, pathname]);
 
   return (
     <Link href="/cart" className="relative h-10 w-6">

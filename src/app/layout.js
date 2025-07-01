@@ -3,8 +3,9 @@ import Navbar from "@/components/Navbar/Navbar";
 import Footer from "@/components/Footer/Footer";
 
 export const metadata = {
-  title: "KVN Universe",
-  description: "",
+  title: "Kevin Universe",
+  description:
+    "  Personalized intros and title sequences in the style of you most loved movies and shows",
 };
 
 export default function RootLayout({ children }) {

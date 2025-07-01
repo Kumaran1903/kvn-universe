@@ -4,7 +4,7 @@ import ProfileForm from "@/components/Profile/ProfileForm";
 import PaymentForm from "@/components/Payment/PaymentForm";
 import { useDebounce } from "@/lib/hooks/useDebounce";
 
-export default function CheckoutClient({ session, totalAmount }) {
+export default function CheckoutClient({ session, totalAmount, cartItems }) {
   const [paymentMethod, setPaymentMethod] = useState("upi");
   const [upiId, setUpiId] = useState("");
   const [profile, setProfile] = useState({
@@ -30,7 +30,6 @@ export default function CheckoutClient({ session, totalAmount }) {
       })
         .then((res) => res.json())
         .then((data) => {
-          console.log(data?.user);
           if (data.success && data.user) {
             setProfile({
               _id: data.user._id,
@@ -67,6 +66,7 @@ export default function CheckoutClient({ session, totalAmount }) {
     >
       <ProfileForm profile={profile} setProfile={setProfile} />
       <PaymentForm
+        cartItems={cartItems}
         profile={profile}
         paymentMethod={paymentMethod}
         setPaymentMethod={setPaymentMethod}

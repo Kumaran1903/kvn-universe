@@ -13,6 +13,7 @@ export default function PaymentForm({
   setUpiId,
   totalAmount,
   userId,
+  cartItems,
 }) {
   const [uploadedFile, setUploadedFile] = useState(null);
   const [isDragOver, setIsDragOver] = useState(false);
@@ -44,7 +45,11 @@ export default function PaymentForm({
       formData.append("email", profile.email);
       formData.append("phone", profile.phone);
       formData.append("TotalAmount", totalAmount);
-
+      const purchasedItems = cartItems.map((item) => ({
+        title: item.title,
+        price: item.price,
+      }));
+      formData.append("purchasedItems", JSON.stringify(purchasedItems));
       try {
         const res = await fetch("/api/send-payment-proof", {
           method: "POST",
