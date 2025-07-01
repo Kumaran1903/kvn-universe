@@ -100,10 +100,30 @@ const priceSchema = mongoose.Schema({
   ],
 });
 
+const templateSchema = mongoose.Schema({
+  title: {
+    type: String,
+    required: true,
+  },
+  image: {
+    type: String,
+    required: true,
+  },
+  link: {
+    type: String,
+  },
+});
+
 export const Post = mongoose.models?.Post || mongoose.model("Post", postSchema);
+
 export const Cart = mongoose.models?.Cart || mongoose.model("Cart", cartSchema);
+
 export const Wishlist =
   mongoose.models?.Wishlist || mongoose.model("Wishlist", wishlistSchema);
 export const User = mongoose.models?.User || mongoose.model("User", userSchema);
+
 export const UserPricing =
   mongoose.models?.UserPricing || mongoose.model("UserPricing", priceSchema);
+
+export const Templates =
+  mongoose.models?.Templates || mongoose.model("Templates", templateSchema);

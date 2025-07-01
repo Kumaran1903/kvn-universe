@@ -8,6 +8,7 @@ import Image from "next/image";
 export default async function Navbar() {
   const links = [
     { name: "Home", url: "/" },
+    { name: "Free Templates", url: "/free-templates" },
     { name: "Store", url: "/store" },
     { name: "Wishlist", url: "/cart" },
     { name: "About", url: "/about" },
@@ -25,7 +26,7 @@ export default async function Navbar() {
             <Link
               key={item.name}
               href={item.url}
-              className="relative text-gray-900 hover:text-indigo-600 transition-color duration-300 after:absolute after:left-1/2 after:bottom-0 after:w-0 after:h-[2px] after:bg-indigo-600 after:transform after:-translate-x-1/2 hover:after:w-full after:transition-all after:duration-300"
+              className="relative text-gray-700 hover:text-indigo-600 transition-color duration-300 after:absolute after:left-1/2 after:bottom-0 after:w-0 after:h-[2px] after:bg-indigo-600 after:transform after:-translate-x-1/2 hover:after:w-full after:transition-all after:duration-300"
             >
               {item.name}
             </Link>
@@ -33,7 +34,7 @@ export default async function Navbar() {
           {session?.user?.isAdmin && (
             <Link
               href="/admin"
-              className="relative text-gray-900 hover:text-indigo-600 transition-color duration-300 after:absolute after:left-1/2 after:bottom-0 after:w-0 after:h-[2px] after:bg-indigo-600 after:transform after:-translate-x-1/2 hover:after:w-full after:transition-all after:duration-300"
+              className="relative text-gray-700 hover:text-indigo-600 transition-color duration-300 after:absolute after:left-1/2 after:bottom-0 after:w-0 after:h-[2px] after:bg-indigo-600 after:transform after:-translate-x-1/2 hover:after:w-full after:transition-all after:duration-300"
             >
               Admin
             </Link>
@@ -42,7 +43,7 @@ export default async function Navbar() {
             <form action={handleLogout}>
               <button
                 type="submit"
-                className="relative cursor-pointer uppercase text-gray-900 hover:text-indigo-600 transition-color duration-300 after:absolute after:left-1/2 after:bottom-0 after:w-0 after:h-[2px] after:bg-indigo-600 after:transform after:-translate-x-1/2 hover:after:w-full after:transition-all after:duration-300"
+                className="relative cursor-pointer uppercase text-gray-700 hover:text-indigo-600 transition-color duration-300 after:absolute after:left-1/2 after:bottom-0 after:w-0 after:h-[2px] after:bg-indigo-600 after:transform after:-translate-x-1/2 hover:after:w-full after:transition-all after:duration-300"
               >
                 Logout
               </button>
@@ -50,7 +51,7 @@ export default async function Navbar() {
           ) : (
             <Link
               href="/login"
-              className="relative text-gray-900 hover:text-indigo-600 transition-color duration-300 after:absolute after:left-1/2 after:bottom-0 after:w-0 after:h-[2px] after:bg-indigo-600 after:transform after:-translate-x-1/2 hover:after:w-full after:transition-all after:duration-300"
+              className="relative text-gray-700 hover:text-indigo-600 transition-color duration-300 after:absolute after:left-1/2 after:bottom-0 after:w-0 after:h-[2px] after:bg-indigo-600 after:transform after:-translate-x-1/2 hover:after:w-full after:transition-all after:duration-300"
             >
               Login
             </Link>

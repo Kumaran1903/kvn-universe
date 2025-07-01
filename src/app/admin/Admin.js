@@ -9,7 +9,7 @@ import {
   Edit2,
   Trash2,
   IndianRupee,
-  ImagePlus,
+  ImagePlus,      
 } from "lucide-react";
 
 export default function AdminPostsPage({ posts }) {

@@ -8,11 +8,13 @@ import { handleLogout } from "@/lib/action";
 export default function Menu({ session }) {
   const links = [
     { name: "Home", url: "/" },
+    { name: "Free Templates", url: "/free-templates" },
     { name: "Store", url: "/store" },
     { name: "Wishlist", url: "/cart" },
     { name: "About", url: "/about" },
     { name: "Contact", url: "/contact" },
   ];
+  
   const [isOpen, setIsOpen] = useState(false);
 
   const pathname = usePathname();
